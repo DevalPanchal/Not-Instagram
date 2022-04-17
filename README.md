@@ -2,7 +2,7 @@
 | Group Member Name | GitHub Username (GitHub URL)|
 | :------------------------:|:--------------------------------------:|
 | Deval Panchal | [DevalPanchal](https://github.com/DevalPanchal) |
-| Daniel Earley | [Username](https://github.com/daniel-earley) |
+| Daniel Earley | [daniel-earley](https://github.com/daniel-earley) |
 | FirstName LastName | [Username](https://github.com/) |
 | FirstName LastName | [Username](https://github.com/) |
 | FirstName LastName | [Username](https://github.com/) |
