@@ -1,5 +1,4 @@
 const express = require("express");
-const authorization = require("./middleware/auth");
 const router = express.Router();
 const jwtToken = require("../../utility/jwtToken");
 
@@ -7,6 +6,19 @@ const bcrypt = require("bcrypt");
 
 let User = require("../../model/user.model");
 const jwtGenerator = require("../../utility/jwtToken");
+const auth = require("./middleware/auth");
+
+
+// verify jwt token
+router.get("/verify", auth, async(req, res) => {
+     try {
+          console.log(true);
+          res.json({ verify: true });
+     } catch (error) {
+          console.error(error);
+          res.status(500).json("Server error");
+     }
+});
 
 // register route (add user)
 router.post("/register", async(req, res) => {
@@ -81,7 +93,7 @@ router.post("/login", async(req, res) => {
 
 
 // get users
-router.get("/users", authorization, async(req, res) => {
+router.get("/users", auth, async(req, res) => {
      try {
           let users = await User.find();
 
@@ -93,7 +105,7 @@ router.get("/users", authorization, async(req, res) => {
 });
 
 // get single user
-router.get("/:username", authorization, async (req, res) => {
+router.get("/:username", auth, async (req, res) => {
      try {
           // get username from query parameter
           let username = req.params.username;
@@ -109,7 +121,7 @@ router.get("/:username", authorization, async (req, res) => {
 });
 
 // delete user
-router.delete("/delete/:username", authorization, async (req, res) => {
+router.delete("/delete/:username", auth, async (req, res) => {
      try {
           // get username from query parameter
           let username = req.params.username;
@@ -122,17 +134,9 @@ router.delete("/delete/:username", authorization, async (req, res) => {
           console.error(error);
           res.status(500).json("Server error");
      }
-})
-
-
-// verify jwt token
-router.get("/verify-token", authorization, async (req, res) => {
-     try {
-          res.json({ verify: true });
-     } catch (error) {
-          console.error(error);
-          res.status(500).json("Server error");
-     }
 });
+
+
+
 
 module.exports = router;

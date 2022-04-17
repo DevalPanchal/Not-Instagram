@@ -51,7 +51,7 @@ export default {
                     });
                     const parseResponse = await response.json();
 
-                    console.log(parseResponse);
+                    // console.log(parseResponse);
 
                     if (parseResponse.token) {
                         localStorage.setItem("token", parseResponse.token);

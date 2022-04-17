@@ -9,6 +9,9 @@ const routes = [
   	  	name: "Home",
   	  	component: HomeView,
   	  	props: true,
+		meta: {
+			requiresAuth: true
+		}
   	},
   	{
   	  	path: "/login",
@@ -27,6 +30,15 @@ const routes = [
 const router = createRouter({
   	history: createWebHistory(process.env.BASE_URL),
   	routes,
+});
+
+router.beforeEach((to, from, next) => {
+	// check if the user is logged in, if not then redirect to login
+	let isLoggedIn = localStorage.token ? true : false;
+	if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
+		next("/login");
+	}
+	next();
 });
 
 export default router;
