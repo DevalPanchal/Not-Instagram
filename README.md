@@ -3,7 +3,7 @@
 | :------------------------:|:--------------------------------------:|
 | Deval Panchal | [DevalPanchal](https://github.com/DevalPanchal) |
 | Daniel Earley | [daniel-earley](https://github.com/daniel-earley) |
-| FirstName LastName | [Username](https://github.com/) |
+| Richard Pena | [RichardAPena](https://github.com/RichardAPena) |
 | FirstName LastName | [Username](https://github.com/) |
 | FirstName LastName | [Username](https://github.com/) |
 
