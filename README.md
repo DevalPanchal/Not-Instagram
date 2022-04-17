@@ -14,7 +14,7 @@ The project that was decided to be developed was an instagram clone dubbed "Not-
 1. Navigate to the server directory
 2. run `npm install`
 3. create a `.env` file
-4. add value `JWT_SECRET="type anything you want here and it should work"
+4. add value `JWT_SECRET="type anything you want here and it should work"`
 5. add value `MONGO_URI="insert your mongodb atlas uri here"`
     - to get you mongodb atlas uri make an account on https://www.mongodb.com/
     - then sign up for a free mongodb cluster (512 mb)
