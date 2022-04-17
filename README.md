@@ -4,7 +4,7 @@
 | Deval Panchal | [DevalPanchal](https://github.com/DevalPanchal) |
 | Daniel Earley | [daniel-earley](https://github.com/daniel-earley) |
 | Richard Pena | [RichardAPena](https://github.com/RichardAPena) |
-| FirstName LastName | [Username](https://github.com/) |
+| Sirichai Justin Wong | [SJustinWong](https://github.com/SJustinWong) |
 | FirstName LastName | [Username](https://github.com/) |
 
 # Project Overview
