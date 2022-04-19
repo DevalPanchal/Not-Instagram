@@ -5,7 +5,7 @@
 | Daniel Earley | [daniel-earley](https://github.com/daniel-earley) |
 | Richard Pena | [RichardAPena](https://github.com/RichardAPena) |
 | Sirichai Justin Wong | [SJustinWong](https://github.com/SJustinWong) |
-| FirstName LastName | [Username](https://github.com/) |
+| Samih Ejel | [samihejel](https://github.com/samihejel) |
 
 # Project Overview
 The project that was decided to be developed was an instagram clone dubbed "Not-Instagram", which covers the basic functionalities of the actual instagram app.
