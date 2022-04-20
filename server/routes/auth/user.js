@@ -80,7 +80,7 @@ router.post("/login", async(req, res) => {
           const validPassword = await bcrypt.compare(password, user.password);
 
           if (!validPassword) {
-               return res.status(401).json("Password or username is incorrect");
+               return res.status(401).json("Password or username is incorrect try again.");
           }
 
           const token = jwtGenerator(user._id);
@@ -135,7 +135,6 @@ router.delete("/delete/:username", auth, async (req, res) => {
           res.status(500).json("Server error");
      }
 });
-
 
 
 

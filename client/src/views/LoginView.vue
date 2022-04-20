@@ -10,7 +10,7 @@
 
                 <button>Login</button>
                 <hr />
-                <p>Forgot password?</p>
+                <p :style="{ 'margin-bottom': '15px' }">Forgot password?</p>
             </form>
         </Card>
         <Card class="card-2">
@@ -38,7 +38,7 @@ export default {
             this.$router.push(route);
         },
         async handleSubmit() {
-            this.error = this.username.length > 3 ? "" : "Username must be greater than 3 characters";
+            // this.error = this.username.length > 3 ? "" : "Username must be greater than 3 characters";
             if (!this.error) {
                 try {
                     const body = { username: this.username, password: this.password };
@@ -59,10 +59,12 @@ export default {
                         this.password = "";
                         this.$router.push("/");
                     } else {
-                        console.log("Error fetching");
+                        this.error = parseResponse;
+                        console.log("Error fetching", parseResponse);
                     }
                 } catch (error) {
                     console.error(error);
+                    
                 }
             }
         }
@@ -149,5 +151,8 @@ button {
         }
     }
 }
-
+.error {
+    color: red;
+    width: 80%;
+}
 </style>

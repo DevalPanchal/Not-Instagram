@@ -1,7 +1,7 @@
 <template>
 	<div class="home">
 		<Navbar />
-		<button @click="logout">logout [remove later]</button>
+		<!-- <button @click="logout">logout [remove later]</button> -->
 	</div>
 </template>
 
