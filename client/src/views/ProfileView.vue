@@ -1,7 +1,7 @@
 <template>
-    <header class="profileHeader">
+    <div class="profileHeader">
+        
         <h1>{{username}}</h1>
-
         <table>
             <tr>
                 <td>{{posts}} posts</td>
@@ -15,7 +15,30 @@
 
         <h2>POSTS</h2>
 
-    </header>
+        <table class="posts">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="card">
+                            <img src="../assets/placeHolder.png" class="card-img-top">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img src="../assets/placeHolder.png" class="card-img-top">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img src="../assets/placeHolder.png" class="card-img-top">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>     
+
+    </div>
     
 </template>
 
@@ -57,15 +80,25 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
 
-header{
+.profileHeader{
     font-family: "Quicksand", sans-serif;
     text-align: center;
 }
 
 h1 {
     font-family: "Quicksand", sans-serif;
-    /* text-align: center; */
     font-weight: 300;
+}
+
+table {
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    padding-left: 2rem;
 }
 
 /* Pablo Villoslada 2013 Answer to "CSS technique for a horizontal line with words in the middle" CSS. http://jsfiddle.net/Puigcerber/vLwDf/1/ */
@@ -93,18 +126,25 @@ h2:after {
     left: 0.5em;
     margin-right: -50%;
 }
-
 /* End of CSS from Pablo Villoslada */
 
-table {
-    font-weight: 400;
-    font-size: 1.5rem;
+/* Posts */
+.posts {
     margin-left: auto;
     margin-right: auto;
 }
 
-td {
-    padding-left: 2rem;
+.card { 
+    width: 20rem;
+    height: 20rem;
+    border: none;
+    float: left;
+    display: flex;
+}
+
+.card-img-top {
+    width: 20rem;
+    height: 20rem;
 }
 
 </style>
