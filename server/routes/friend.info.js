@@ -45,7 +45,7 @@ router.delete("/delete/:friend", auth, async (req, res) => {
         if (findFriend) {
             let foundFriend = findFriend.friends.includes(friendName);
             if (!foundFriend) {
-                 return res.status(404).json("This person does not exist in the database");
+                return res.status(404).json("This person does not exist in the database");
             }
         }
 
@@ -63,6 +63,86 @@ router.delete("/delete/:friend", auth, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json("Server error");
+    }
+});
+
+// send friend request
+router.post("/request/:friend", auth, async (req, res) => {
+    try {
+        // get friend request name (to: Deval2)
+        let friendRequest = req.params.friend; 
+
+        // get user id
+        let userID = req.user;
+        
+        // get user info
+        let userInfo = await User.findOne({ _id: userID });
+
+        // get requests array
+        let requests = [...userInfo.requests];
+
+        if (!requests.includes(friendRequest)) {
+            // add request to the curr user
+            await User.updateOne(
+                { _id: userID },
+                { $push: { requests: friendRequest } }
+            );
+
+            // add request to the requested user
+            await User.updateOne(
+                { username: friendRequest },
+                { $push: { requests: userInfo.username } }
+            );
+        } else {
+            return res.json("You already sent this person a friend request");
+        }
+
+        res.json(userInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(404).json("Server error");
+    }
+});
+
+// accept friend request
+router.post("/accept/:friend", auth, async (req, res) => {
+    try {
+        // get friend request name (from: Deval)
+        let friendAccept = req.params.friend;
+
+        // get user id
+        let userID = req.user;
+
+        // remove from friend request
+        await User.updateOne(
+            { _id: userID },
+            { $pull: { requests: { $in: [friendAccept] } } }
+        );
+        
+        // remove from friend request
+        await User.updateOne(
+            { username: friendAccept },
+            { $pull: { requests: { $in: [friendAccept] } } }
+        );
+        
+        // add as friend
+        await User.updateOne(
+            { _id: userID },
+            { $push: { friends: friendAccept } }
+        );
+        
+        // 
+        await User.updateOne(
+            { username: friendAccept },
+            { $push: { friends: friendAccept } }
+        );
+        
+        let userInfo = await User.findOne({ _id: userID });
+
+        res.json(userInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(404).json("Server error");
     }
 });
 

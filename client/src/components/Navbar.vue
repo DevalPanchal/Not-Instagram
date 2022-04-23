@@ -4,9 +4,23 @@
         <section class="nav-section">
             <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
             <i class="fa-solid fa-paper-plane"></i>
-            <i class="fa-solid fa-heart"></i>
+
+            <div class="dropdown" @click="fetchUsers">
+                <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                    <li class="list-item" v-for="user in users" :key="user">
+                        <a class="dropdown-item">{{ user }}</a>
+                        <button v-if="this.requests.includes(user)" class="added-btn" disabled="true">sent</button>
+                        <button v-else class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <i class="fa-solid fa-heart"></i> -->
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -22,8 +36,20 @@
 </template>
 
 <script>
+import Dropdown from '../components/Dropdown.vue';
+
 export default {
     name: "Navbar",
+    components: { Dropdown },
+    data() {
+        return {
+            users: [],
+            requests: []
+        }
+    },
+    mounted() {
+        this.fetchUserInfo();
+    },
     methods: {
         routeTo(route) {
             this.$router.push(route);
@@ -31,6 +57,56 @@ export default {
         logout() {
             localStorage.removeItem("token");
             this.$router.push("/login");
+        },
+        stopDropDown(e) {
+            e.stopPropagation();
+        },
+        async fetchUsers() {
+            try {
+                const response = await fetch(`http://localhost:5000/user/all-users`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await response.json();  
+                this.users = [...parseRes];
+                // console.log(this.users);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async sendFriendRequest(friend) {
+            try {
+                console.log("Adding friend", friend);
+                const response = await fetch(`http://localhost:5000/friend/request/${friend}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await response.json();
+                console.log("friend request successfully sent");
+                console.log(parseRes);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async fetchUserInfo() {
+            try {
+                const res = await fetch("http://localhost:5000/user/get-user", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                this.requests = [...parseRes.requests];
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 }
@@ -67,6 +143,58 @@ export default {
     &:hover {
         cursor: pointer;
         opacity: 0.7;
+    }
+}
+.dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.users, .user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: #2c3e50;
+    border: none;
+    transition: 0.1s;
+    &:hover {
+        background: none;
+        color: #2c3e50;
+    }
+}
+.dropdown-toggle::after {
+    display: none
+}
+.list-item {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        cursor: pointer;
+    }
+    .add-btn {
+        width: 50px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+        font-weight: 100;
+    }
+    .added-btn {
+        width: auto;
+        height: 30px;
+        color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #2c3e50;
+        background-color: #fff;
+        opacity: 0.3;
+        margin: 5px;
+        font-weight: 100;
     }
 }
 </style>
