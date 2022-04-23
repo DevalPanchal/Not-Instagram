@@ -13,7 +13,11 @@ const auth = require("./middleware/auth");
 router.get("/verify", auth, async(req, res) => {
      try {
           console.log(true);
-          res.json({ verify: true });
+          let userID = req.user;
+
+          let userInfo = await User.findOne({ _id: userID });
+
+          res.json({ verify: true, name: userInfo.username });
      } catch (error) {
           console.error(error);
           res.status(500).json("Server error");

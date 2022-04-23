@@ -12,16 +12,23 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                     <li class="list-item" v-for="user in users" :key="user">
                         <a class="dropdown-item">{{ user }}</a>
-                        <button v-if="this.requests.includes(user)" class="added-btn" disabled="true">sent</button>
+                        <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
                         <button v-else class="add-btn" @click="sendFriendRequest(user)">Add</button>
                     </li>
+                    <hr />
+                    <p>Requests</p>
+                    <li class="list-item" v-for="request in requests" :key="request">
+                        <a class="dropdown-item">{{ request }}</a>
+                        <button class="add-btn" @click="acceptFriendRequest(request)">Accept</button>
+                    </li>
                 </ul>
+                
             </div>
 
             <!-- <i class="fa-solid fa-heart"></i> -->
             <div class="dropdown">
                 <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i>
+                    <p>{{ this.currentUser }}</p> <i class="fas fa-user"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
@@ -44,7 +51,10 @@ export default {
     data() {
         return {
             users: [],
-            requests: []
+            requestSent: [],
+            requests: [],
+            friends: [],
+            currentUser: localStorage.username
         }
     },
     mounted() {
@@ -56,6 +66,7 @@ export default {
         },
         logout() {
             localStorage.removeItem("token");
+            localStorage.removeItem("username");
             this.$router.push("/login");
         },
         stopDropDown(e) {
@@ -104,6 +115,21 @@ export default {
                 });
                 const parseRes = await res.json();
                 this.requests = [...parseRes.requests];
+                this.requestSent = [...parseRes.requestSent];
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async acceptFriendRequest(request) {
+            try {
+                const res = await fetch(`http://localhost:5000/friend/accept/${request}`, {
+                    method: "POST",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                console.log(parseRes);
             } catch (error) {
                 console.error(error);
             }
@@ -154,10 +180,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    text-align: center;
     background-color: #fff;
     color: #2c3e50;
     border: none;
     transition: 0.1s;
+    p {
+        margin-bottom: 0;
+    }
     &:hover {
         background: none;
         color: #2c3e50;

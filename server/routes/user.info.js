@@ -29,8 +29,15 @@ router.get("/all-users", auth, async(req, res) => {
         // query db
         let allUsers = await User.find();
 
+        let userID = req.user;
+
+        let userInfo = await User.findOne({ _id: userID });
+
         // get all usernames
         let usernames = allUsers.map((item) => item.username);
+
+        // remove user who requested the all user names
+        usernames = usernames.filter((user) => user !== userInfo.username);
 
         res.json(usernames);
     } catch (error) {
