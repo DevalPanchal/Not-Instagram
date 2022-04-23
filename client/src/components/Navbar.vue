@@ -11,12 +11,12 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                     <li class="list-item" v-for="user in users" :key="user">
-                        <a class="dropdown-item">{{ user }}</a>
+                        <a v-if="!this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
                         <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
-                        <button v-else class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                        <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
                     </li>
                     <hr />
-                    <p>Requests</p>
+                    <p class="requests">Requests</p>
                     <li class="list-item" v-for="request in requests" :key="request">
                         <a class="dropdown-item">{{ request }}</a>
                         <button class="add-btn" @click="acceptFriendRequest(request)">Accept</button>
@@ -114,6 +114,7 @@ export default {
                     }
                 });
                 const parseRes = await res.json();
+                this.friends = [...parseRes.friends];
                 this.requests = [...parseRes.requests];
                 this.requestSent = [...parseRes.requestSent];
             } catch (error) {
@@ -227,5 +228,8 @@ export default {
         margin: 5px;
         font-weight: 100;
     }
+}
+.requests {
+    padding-left: 15px;
 }
 </style>

@@ -5,7 +5,7 @@
         <table>
             <tr>
                 <td>{{ posts }} posts</td>
-                <td>{{ friends }} friends</td>
+                <td class="friends" @click="routeTo(`/friends`)">{{ friends }} friends</td>
             </tr>
         </table>
 
@@ -20,17 +20,17 @@
                 <tr>
                     <td>
                         <div class="card">
-                            <img src="../assets/placeHolder.png" class="card-img-top">
+                            <img src="../assets/logo.png" class="card-img-top">
                         </div>
                     </td>
                     <td>
                         <div class="card">
-                            <img src="../assets/placeHolder.png" class="card-img-top">
+                            <img src="../assets/logo.png" class="card-img-top">
                         </div>
                     </td>
                     <td>
                         <div class="card">
-                            <img src="../assets/placeHolder.png" class="card-img-top">
+                            <img src="../assets/logo.png" class="card-img-top">
                         </div>
                     </td>
                 </tr>
@@ -59,6 +59,9 @@ export default {
         this.getUserInfo();
     },
     methods: {
+        routeTo(route) {
+            this.$router.push(route);
+        },
         async getUserInfo(){
             try {
                 const res = await fetch("http://localhost:5000/user/get-user", {
@@ -79,7 +82,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
 
 .profileHeader{
@@ -148,5 +151,11 @@ h2:after {
     width: 20rem;
     height: 20rem;
 }
-
+.friends {
+    transition: 0.2s;
+    &:hover {
+        cursor: pointer;
+        color: #d1d1d1;
+    }
+}
 </style>

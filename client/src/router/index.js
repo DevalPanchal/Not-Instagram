@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
+import FriendsView from '../views/FriendsView.vue';
 
 const routes = [
   	{
@@ -34,7 +35,16 @@ const routes = [
 		meta: {
 			requiresAuth: true
 		}
-    }
+    },
+	{
+		path: "/friends",
+		name: "FriendsView",
+		component: FriendsView,
+		props: true,
+		meta: {
+			requiresAuth: true
+		}
+	}
 ];
 
 const router = createRouter({
