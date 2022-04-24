@@ -15,26 +15,25 @@
 
         <h2>POSTS</h2>
 
-        <table class="posts" id="postTable">
-            <!-- <tr>
+        <!-- <table class="posts" id="postTable">
+            <tr>
                 <td>
-                    <div class="card">
-                        <img src="../assets/placeHolder1.png" class="card-img-top">
+                    <div class="card" v-for="post in posts" :key="post">
+                        <img src="`${post}`" class="card-img-top">
                     </div>
                 </td>
-                <td>
-                    <div class="card">
-                        <img src="../assets/placeHolder2.png" class="card-img-top">
-                    </div>
-                </td>
-                <td>
-                    <div class="card">
-                        <img src="../assets/placeHolder3.png" class="card-img-top">
-                    </div>
-                </td>
-            </tr>            -->
+            </tr>
 
-        </table>     
+
+        </table>      -->
+        <div class="post-container">
+            <div class="grid-container">
+                <div class="card" v-for="post in posts" :key="post">
+                    <img :src="`../assets/${post}`" class="card-img-top"/>
+                </div>
+            </div>
+        </div>
+            
 
     </div>
     
@@ -48,15 +47,17 @@ export default {
     data(){
         return{
             username: "",
-            posts_amount: 0,
+            posts_amount: 6,
             friends: 0,
             description: "Default Description",
             posts: ["placeHolder1.png","placeHolder2.png","placeHolder3.png","placeHolder4.png","placeHolder5.png","placeHolder6.png"]
+
+            
         }
     },
     mounted() {
         this.getUserInfo();
-        this.setPosts();
+        // this.setPosts();
     },
     methods: {
         async getUserInfo(){
@@ -88,13 +89,13 @@ export default {
                     let card = document.createElement("div");
                     let img = document.createElement("img");
 
+                    // Set Image to post
+                    img.src = imgPath + this.posts[j];
+
                     // Set class names
                     card.className = "card";
                     img.className = "card-img-top";
 
-                    // Set Image to post
-                    img.src = imgPath + this.posts[j];
-                    console.log("path = " + imgPath + this.posts[j])
                     // Combine
                     card.appendChild(img);
                     cell.appendChild(card);
