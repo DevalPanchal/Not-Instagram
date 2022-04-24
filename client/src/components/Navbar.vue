@@ -46,7 +46,7 @@
                 <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <p>{{ this.currentUser }}</p> 
                     <!-- <i class="fas fa-user"></i> -->
-                    <img src="../assets/logo.png" class="profile-img" />
+                    <img :src="'../assets/logo.png'" class="profile-img" />
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
