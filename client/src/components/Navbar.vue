@@ -2,9 +2,26 @@
     <nav class="header">
         <h1>Not-Instagram</h1>
         <section class="nav-section">
+            
+            <!-- Search Button -->
+            <div class="dropdown" @click="fetchUsers">
+                <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                    <li class="list-item" v-for="user in users" :key="user">
+                        <form id="search-form" role="search">
+                            
+                        <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
+                        <button class="search-btn" @click=searchUserInfo()><i class="fa fa-search"></i></button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            
             <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
             <i class="fa-solid fa-paper-plane"></i>
-
+            
             <div class="dropdown" @click="fetchUsers">
                 <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-heart"></i>
@@ -55,7 +72,8 @@ export default {
             requestSent: [],
             requests: [],
             friends: [],
-            currentUser: localStorage.username
+            currentUser: localStorage.username,
+            searchString: "",
         }
     },
     mounted() {
@@ -229,6 +247,35 @@ export default {
         margin: 5px;
         font-weight: 100;
     }
+
+    .search-btn {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #2c3e50;
+    }
+
+    #search-form {
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: 2px solid #2c3e50;
+    }
+
+    #query{
+        all: unset;
+        font: 16px system-ui;
+        height: 100%;
+        width: 100%;
+        padding: 5px 10px;
+    }
+
+    ::placeholder {
+        opacity: 0.7;   
+    }   
 }
 .requests {
     padding-left: 15px;
