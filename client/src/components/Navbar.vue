@@ -11,13 +11,13 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                     <li class="list-item" v-for="user in users" :key="user">
                         <form id="search-form" role="search">
-                            
-                        <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
-                        <button class="search-btn" @click=searchUserInfo()><i class="fa fa-search"></i></button>
+                            <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
+                            <button class="search-btn" @click="searchUserInfo()"><i class="fa fa-search"></i></button>
                         </form>
                     </li>
                 </ul>
             </div>
+            
             
             <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
             <i class="fa-solid fa-paper-plane"></i>
@@ -46,7 +46,7 @@
                 <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <p>{{ this.currentUser }}</p> 
                     <!-- <i class="fas fa-user"></i> -->
-                    <img :src="'../assets/logo.png'" class="profile-img" />
+                    <img :src="`../assets/logo.png`" class="profile-img" />
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
