@@ -249,7 +249,7 @@ export default {
 }
 
 .search-btn {
-    width: 45px;
+    width: 50px;
     height: 45px;
     display: flex;
     justify-content: center;
@@ -262,7 +262,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 3px solid #2c3e50;
+    border: 1px solid #2c3e50;
 }
 
 #query{
