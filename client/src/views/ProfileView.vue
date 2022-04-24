@@ -15,21 +15,10 @@
 
         <h2>POSTS</h2>
 
-        <!-- <table class="posts" id="postTable">
-            <tr>
-                <td>
-                    <div class="card" v-for="post in posts" :key="post">
-                        <img src="`${post}`" class="card-img-top">
-                    </div>
-                </td>
-            </tr>
-
-
-        </table>      -->
         <div class="post-container">
             <div class="grid-container">
                 <div class="card" v-for="post in posts" :key="post">
-                    <img :src="`../assets/${post}`" class="card-img-top"/>
+                    <img :src="`../assets/${post}`"/>
                 </div>
             </div>
         </div>
@@ -57,7 +46,6 @@ export default {
     },
     mounted() {
         this.getUserInfo();
-        // this.setPosts();
     },
     methods: {
         async getUserInfo(){
@@ -74,49 +62,34 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        },
-        setPosts(){
-            let table = document.getElementById("postTable");
-            let imgPath = "../assets/";
-            let rows = Math.floor(this.posts_amount/3);
-            let j = 0;
-            for (let i = 0; i < rows; i++){
-                let row = document.createElement("tr");
-                for (; j < this.posts_amount; j++){
-
-                    // Create table elements
-                    let cell = document.createElement("td");
-                    let card = document.createElement("div");
-                    let img = document.createElement("img");
-
-                    // Set Image to post
-                    img.src = imgPath + this.posts[j];
-
-                    // Set class names
-                    card.className = "card";
-                    img.className = "card-img-top";
-
-                    // Combine
-                    card.appendChild(img);
-                    cell.appendChild(card);
-                    row.appendChild(cell);
-
-                    if ((j + 1) % 3 == 0){
-                        j++;
-                        break;
-                    }
-                }
-                table.appendChild(row);
-            }
-
         }
     }
 }
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
+
+.header-content {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    h3 {
+        font-size: 20px;
+        border-radius: 5px;
+        border: 1px solid #d1d1d1;
+        padding: 5px 2px;
+        margin: 0;
+        transition: 0.2s;
+        &:hover {
+            cursor: pointer;
+            background: #d1d1d1;
+            color: #fff;
+        }
+    }
+}
 
 .profileHeader{
     font-family: "Quicksand", sans-serif;
@@ -132,7 +105,7 @@ table {
     font-weight: 400;
     font-size: 1.5rem;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
 }
 
 td {
@@ -172,15 +145,32 @@ h2:after {
     margin-right: auto;
 }
 
-.card { 
-    width: 20rem;
-    height: 20rem;
-    border: none;
+.post-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .grid-container {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+        .card {
+            display: flex;
+            justify-content: center;
+            width: 20em;
+            height: 20em;
+            align-items: center;
+            border: none;
+            img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 20em;
+                height: 20em;
+                border: none;
+            }
+        }
+    }
 }
-
-.card-img-top {
-    width: 20rem;
-    height: 20rem;
-}
-
 </style>
