@@ -1,10 +1,14 @@
 <template>
     <div class="profileHeader">
         <Navbar />
-        <h1>{{ username }}</h1>
+        <div class="header-content">
+            <h1>{{ username }}</h1>
+            <h3 @click="routeTo(`/settings`)">Settings</h3>
+            <i class="fa fa-cog" ></i>
+        </div>
         <table>
             <tr>
-                <td>{{ posts }} posts</td>
+                <td>{{ posts.length }} posts</td>
                 <td class="friends" @click="routeTo(`/friends`)">{{ friends }} friends</td>
             </tr>
         </table>
@@ -15,28 +19,13 @@
 
         <h2>POSTS</h2>
 
-        <table class="posts">
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="card">
-                            <img src="../assets/logo.png" class="card-img-top">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="card">
-                            <img src="../assets/logo.png" class="card-img-top">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="card">
-                            <img src="../assets/logo.png" class="card-img-top">
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-
-        </table>     
+        <div class="image-container">
+            <div class="image-grid-container">
+                <div v-for="post in posts" :key="post" class="card">
+                    <img src="../assets/logo.png" />
+                </div>
+            </div>
+        </div>
 
     </div>
     
@@ -50,9 +39,10 @@ export default {
     data(){
         return{
             username: "",
-            posts: 0,
+            posts_amount: 0,
             friends: 0,
-            description: "Default Description"
+            description: "Default Description",
+            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png"]
         }
     },
     mounted() {
@@ -84,6 +74,26 @@ export default {
 
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
+
+.header-content {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    h3 {
+        font-size: 20px;
+        border-radius: 5px;
+        border: 1px solid #d1d1d1;
+        padding: 5px 2px;
+        margin: 0;
+        transition: 0.2s;
+        &:hover {
+            cursor: pointer;
+            background: #d1d1d1;
+            color: #fff;
+        }
+    }
+}
 
 .profileHeader{
     font-family: "Quicksand", sans-serif;
@@ -139,23 +149,51 @@ h2:after {
     margin-right: auto;
 }
 
-.card { 
-    width: 20rem;
-    height: 20rem;
-    border: none;
-    float: left;
-    display: flex;
-}
+// .card { 
+//     width: 20rem;
+//     height: 20rem;
+//     border: none;
+//     float: left;
+//     display: flex;
+// }
 
 .card-img-top {
     width: 20rem;
     height: 20rem;
 }
+
 .friends {
     transition: 0.2s;
     &:hover {
         cursor: pointer;
         color: #d1d1d1;
+    }
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .image-grid-container {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+        .card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 20em;
+                height: 20em;
+                border: none;
+            }
+        }
     }
 }
 </style>

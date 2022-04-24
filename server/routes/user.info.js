@@ -8,15 +8,13 @@ const auth = require("./auth/middleware/auth");
 // get user by id
 router.get("/get-user", auth, async (req, res)=>{
      try {
-         // Store userID
-         let userID = req.user;
+        // Store userID
+        let userID = req.user;
+  
+        // get user info from db
+        let userInfo = await User.findOne({ _id: userID });
  
-         console.log(req.user);
- 
-         // get user info from db
-         let userInfo = await User.findOne({ _id: userID });
- 
-         res.json(userInfo);
+        res.json(userInfo);
      } catch (error) {
          console.error(error);
          res.status(500).json("server error");

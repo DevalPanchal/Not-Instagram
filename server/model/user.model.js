@@ -8,7 +8,8 @@ const userSchema = new Schema({
      password: { type: String, required: true, unique: true, trim: true },
      friends: [String],
      requests: [String],
-     requestSent: [String]
+     requestSent: [String],
+     imagePath: { type: String }
 }, {
      timestamps: true
 });

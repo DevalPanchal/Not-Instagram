@@ -22,18 +22,19 @@
                         <button class="add-btn" @click="acceptFriendRequest(request)">Accept</button>
                     </li>
                 </ul>
-                
             </div>
 
             <!-- <i class="fa-solid fa-heart"></i> -->
             <div class="dropdown">
                 <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <p>{{ this.currentUser }}</p> <i class="fas fa-user"></i>
+                    <p>{{ this.currentUser }}</p> 
+                    <!-- <i class="fas fa-user"></i> -->
+                    <img src="../assets/logo.png" class="profile-img" />
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
                     <li><a class="dropdown-item" href="#">Saved</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#" @click="routeTo(`/settings`)">Settings</a></li>
                     <hr />
                     <li><a class="dropdown-item" href="#" @click="logout">Log Out</a></li>
                 </ul>
@@ -231,5 +232,22 @@ export default {
 }
 .requests {
     padding-left: 15px;
+}
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid black;
+    padding: 3px;
+}
+
+.user {
+    img {
+        transition: 0.3s;
+        &:hover {
+            cursor: pointer;
+            background-color: #2c3e50;
+        }
+    }
 }
 </style>

@@ -8,6 +8,8 @@ let User = require("../../model/user.model");
 const jwtGenerator = require("../../utility/jwtToken");
 const auth = require("./middleware/auth");
 
+const fs = require('fs');
+
 
 // verify jwt token
 router.get("/verify", auth, async(req, res) => {
@@ -47,6 +49,20 @@ router.post("/register", async(req, res) => {
 
           // hash password
           const hashedPassword = await bcrypt.hash(password, genSalt);
+          
+          // set user image path -> ./storage/images/user_x
+          let userImagePath = "./storage/images/user_" + username + "/";
+
+          // make user folder
+          fs.mkdir(userImagePath, (err) => {
+               if (err) {
+                    // check err
+                    console.log(err);
+               } else {
+                    // successful
+                    console.log("User directory made!");
+               }
+          });
 
           // make new user
           const newUser = await new User({ username, password: hashedPassword });
@@ -129,6 +145,17 @@ router.delete("/delete/:username", auth, async (req, res) => {
      try {
           // get username from query parameter
           let username = req.params.username;
+
+          let userFolderPath = "./storage/images/user_" + username;
+
+          // delete user file
+          fs.rmdir(userFolderPath, (err) => {
+               if (err) {
+                    console.log(err);
+               } else {
+                    console.log("User directory successfully removed!");
+               }
+          });
 
           // delete user -> can also be written await User.deleteOne({ username: username })
           await User.deleteOne({ username });
