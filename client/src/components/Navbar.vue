@@ -4,18 +4,17 @@
         <section class="nav-section">
             
             <!-- Search Button -->
-            <form id="search-form" role="search">
-                            <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
-                            <div class="dropdown" @click="fetchUsers()">
-                                <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                                    
-                                    <a v-if="this.users.includes(searchString)" class="dropdown-item"></a>
-                                </ul>
-                            </div>  
-                        </form>
+            <form id="search-form" role="search" @click="fetchUsers()">
+                <input v-model="searchString" type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
+                <div class="dropdown" @click="searchUsers()">
+                    <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                        
+                    </ul>
+                </div>  
+            </form>
         
             
             <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
@@ -73,10 +72,17 @@ export default {
             friends: [],
             currentUser: localStorage.username,
             searchString: "",
+            filteredUsers: [],
         }
     },
     mounted() {
         this.fetchUserInfo();
+    },
+    updated(){
+        console.log(this.searchString);
+        console.log(this.users);
+        this.filteredUsers = this.users.filter((user) => user.toLowerCase().includes(this.searchString.toLowerCase()));
+        console.log(this.filteredUsers);
     },
     methods: {
         routeTo(route) {
@@ -149,6 +155,13 @@ export default {
                 });
                 const parseRes = await res.json();
                 console.log(parseRes);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async searchUsers() {
+            try {
+                alert(this.filteredUsers);
             } catch (error) {
                 console.error(error);
             }
