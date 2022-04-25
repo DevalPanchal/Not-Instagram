@@ -50,12 +50,15 @@ export default {
             posts_amount: 6,
             friends: 0,
             description: "Default Description",
-            posts: ["placeHolder1.png","placeHolder2.png","placeHolder3.png","placeHolder4.png","placeHolder5.png","placeHolder6.png"]
+            posts: ["placeHolder1.png","placeHolder2.png","placeHolder3.png","placeHolder4.png","placeHolder5.png","placeHolder6.png"],
+            post_array: [] // Array of objects
+            /* 
+                Post has title, image, description, likes and an Array of comments
+            */
         }
     },
     mounted() {
         this.getUserInfo();
-        this.getPosts();
         this.setPosts();
         this.createNewPost();
         this.loadMorePosts();
@@ -75,29 +78,9 @@ export default {
                 const parseRes = await res.json();
                 this.friends = parseRes.friends.length;
                 this.username = parseRes.username;
-            } catch (error) {
-                console.error(error);
-            }
-        },
-        async getPosts() {
-            // TODO: get all the user's posts
-            try {
-                const res = await fetch("http://localhost:5000/user/get-posts", { // TODO
-                    method: "GET",
-                    headers: {
-                        token: localStorage.token
-                    }
-                });
-                const parseRes = await res.json();
-                
-                /*
-                    Post will have:
-                    - Image
-                    - Likes
-                    - Comments
-                    - Link
-                */
-
+                // Will get ALL of a users posts along with their comments
+                this.post_array = parseRes.posts;
+                this.posts_amount
             } catch (error) {
                 console.error(error);
             }
@@ -135,10 +118,10 @@ export default {
             }
         },
         createNewPost() {
-            // TODO
+            // TODO: Will add 
         },
         loadMorePosts() {
-            // TODO, may or may not finish this
+            // TODO: will load 3-6 more posts from the postArray and put them 
         }
     }
 }
