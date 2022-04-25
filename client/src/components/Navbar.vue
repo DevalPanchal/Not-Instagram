@@ -4,19 +4,18 @@
         <section class="nav-section">
             
             <!-- Search Button -->
-            <div class="dropdown" @click="fetchUsers">
-                <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                
-                        <form id="search-form" role="search">
+            <form id="search-form" role="search">
                             <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
-                            <button class="search-btn" @click="searchUserInfo()"><i class="fa fa-search"></i></button>
-                        </form>
+                            <div class="dropdown" @click="fetchUsers">
+                                <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                     
-                </ul>
-            </div>
+                                </ul>
+                            </div>  
+                        </form>
+        
             
             <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
             <i class="fa-solid fa-paper-plane"></i>
@@ -73,6 +72,7 @@ export default {
             friends: [],
             currentUser: localStorage.username,
             searchString: "",
+            allUsers: [],
         }
     },
     mounted() {
@@ -152,7 +152,7 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        }
+        },
     }
 }
 </script>
@@ -248,21 +248,15 @@ export default {
     }
 }
 
-.search-btn {
-    width: 50px;
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #2c3e50;
-}
-
 #search-form {
     border-radius: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    text-align: left;
     border: 1px solid #2c3e50;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #query{
@@ -284,8 +278,8 @@ export default {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 1px solid black;
-    padding: 3px;
+    border: 2px solid black;
+    padding: 2px;
 }
 
 .user {
