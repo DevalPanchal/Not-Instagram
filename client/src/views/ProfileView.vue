@@ -88,9 +88,11 @@ export default {
                     let cell = document.createElement("td");
                     let card = document.createElement("div");
                     let img = document.createElement("img");
+
                     // Set class names
                     card.className = "card";
                     img.className = "card-img-top";
+
                     // Set Image to post
                     img.src = imgPath + this.posts[j];
                     console.log("path = " + imgPath + this.posts[j])
@@ -105,12 +107,6 @@ export default {
                 }
                 table.appendChild(row);
             }
-        },
-        createNewPost() {
-            // TODO
-        },
-        loadMorePosts() {
-            // TODO
         }
     }
 }
