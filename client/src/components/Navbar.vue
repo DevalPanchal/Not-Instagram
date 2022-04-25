@@ -6,12 +6,13 @@
             <!-- Search Button -->
             <form id="search-form" role="search">
                             <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
-                            <div class="dropdown" @click="fetchUsers">
+                            <div class="dropdown" @click="fetchUsers()">
                                 <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                    
+                                    
+                                    <a v-if="this.users.includes(searchString)" class="dropdown-item"></a>
                                 </ul>
                             </div>  
                         </form>
@@ -72,7 +73,6 @@ export default {
             friends: [],
             currentUser: localStorage.username,
             searchString: "",
-            allUsers: [],
         }
     },
     mounted() {
