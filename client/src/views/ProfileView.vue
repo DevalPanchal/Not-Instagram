@@ -80,7 +80,7 @@ export default {
                 this.username = parseRes.username;
                 // Will get ALL of a users posts along with their comments
                 this.post_array = parseRes.posts;
-                this.posts_amount
+                this.posts_amount += post_array.length();
             } catch (error) {
                 console.error(error);
             }

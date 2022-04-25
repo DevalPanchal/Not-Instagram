@@ -44,6 +44,15 @@ const routes = [
 		meta: {
 			requiresAuth: true
 		}
+	},
+	{
+		path: "/post",
+		name: "PostView",
+		component: PostView,
+		props: true,
+		meta: {
+			requiresAuth: true
+		}
 	}
 ];
 
