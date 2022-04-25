@@ -47,7 +47,7 @@ export default {
     data(){
         return{
             username: "",
-            posts_amount: 0,
+            posts_amount: 6,
             friends: 0,
             description: "Default Description",
             posts: ["placeHolder1.png","placeHolder2.png","placeHolder3.png","placeHolder4.png","placeHolder5.png","placeHolder6.png"]
@@ -55,7 +55,10 @@ export default {
     },
     mounted() {
         this.getUserInfo();
+        this.getPosts();
         this.setPosts();
+        this.createNewPost();
+        this.loadMorePosts();
     },
     methods: {
         routeTo(route) {
@@ -72,6 +75,29 @@ export default {
                 const parseRes = await res.json();
                 this.friends = parseRes.friends.length;
                 this.username = parseRes.username;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getPosts() {
+            // TODO: get all the user's posts
+            try {
+                const res = await fetch("http://localhost:5000/user/get-posts", { // TODO
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                
+                /*
+                    Post will have:
+                    - Image
+                    - Likes
+                    - Comments
+                    - Link
+                */
+
             } catch (error) {
                 console.error(error);
             }
@@ -107,6 +133,12 @@ export default {
                 }
                 table.appendChild(row);
             }
+        },
+        createNewPost() {
+            // TODO
+        },
+        loadMorePosts() {
+            // TODO, may or may not finish this
         }
     }
 }
