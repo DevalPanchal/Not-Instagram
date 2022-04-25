@@ -2,10 +2,10 @@
     <div class="profileHeader">
         <Navbar />
         <h1>{{ username }}</h1>
-        <table>
+        <table class="subheader">
             <tr>
-                <td>{{ posts }} posts</td>
-                <td class="friends" @click="routeTo(`/friends`)">{{ friends }} friends</td>
+                <td>{{ posts_amount }} posts</td>
+                <td>{{ friends }} friends</td>
             </tr>
         </table>
 
@@ -15,26 +15,24 @@
 
         <h2>POSTS</h2>
 
-        <table class="posts">
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="card">
-                            <img src="../assets/logo.png" class="card-img-top">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="card">
-                            <img src="../assets/logo.png" class="card-img-top">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="card">
-                            <img src="../assets/logo.png" class="card-img-top">
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+        <table class="posts" id="postTable">
+            <!-- <tr>
+                <td>
+                    <div class="card">
+                        <img src="../assets/placeHolder1.png" class="card-img-top">
+                    </div>
+                </td>
+                <td>
+                    <div class="card">
+                        <img src="../assets/placeHolder2.png" class="card-img-top">
+                    </div>
+                </td>
+                <td>
+                    <div class="card">
+                        <img src="../assets/placeHolder3.png" class="card-img-top">
+                    </div>
+                </td>
+            </tr>            -->
 
         </table>     
 
@@ -44,19 +42,20 @@
 
 <script>
 import Navbar from '../components/Navbar.vue';
-
 export default {
     components: { Navbar },
     data(){
         return{
             username: "",
-            posts: 0,
+            posts_amount: 0,
             friends: 0,
-            description: "Default Description"
+            description: "Default Description",
+            posts: ["placeHolder1.png","placeHolder2.png","placeHolder3.png","placeHolder4.png","placeHolder5.png","placeHolder6.png"]
         }
     },
     mounted() {
         this.getUserInfo();
+        this.setPosts();
     },
     methods: {
         routeTo(route) {
@@ -76,36 +75,66 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        setPosts(){
+            let table = document.getElementById("postTable");
+            let imgPath = "../assets/";
+            let rows = Math.floor(this.posts_amount/3);
+            let j = 0;
+            for (let i = 0; i < rows; i++){
+                let row = document.createElement("tr");
+                for (; j < this.posts_amount; j++){
+                    // Create table elements
+                    let cell = document.createElement("td");
+                    let card = document.createElement("div");
+                    let img = document.createElement("img");
+                    // Set class names
+                    card.className = "card";
+                    img.className = "card-img-top";
+                    // Set Image to post
+                    img.src = imgPath + this.posts[j];
+                    console.log("path = " + imgPath + this.posts[j])
+                    // Combine
+                    card.appendChild(img);
+                    cell.appendChild(card);
+                    row.appendChild(cell);
+                    if ((j + 1) % 3 == 0){
+                        j++;
+                        break;
+                    }
+                }
+                table.appendChild(row);
+            }
+        },
+        createNewPost() {
+            // TODO
+        },
+        loadMorePosts() {
+            // TODO
         }
     }
 }
-
 </script>
 
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
-
 .profileHeader{
     font-family: "Quicksand", sans-serif;
     text-align: center;
 }
-
 h1 {
     font-family: "Quicksand", sans-serif;
     font-weight: 300;
 }
-
 table {
     font-weight: 400;
     font-size: 1.5rem;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; 
 }
-
 td {
     padding-left: 2rem;
 }
-
 /* Pablo Villoslada 2013 Answer to "CSS technique for a horizontal line with words in the middle" CSS. http://jsfiddle.net/Puigcerber/vLwDf/1/ */
 h2 {
     font-weight: 400;
@@ -113,7 +142,6 @@ h2 {
     overflow: hidden;
     text-align: center;
 }
-
 h2:before, h2:after{
     background-color: #cccccc;
     content: "";
@@ -132,21 +160,16 @@ h2:after {
     margin-right: -50%;
 }
 /* End of CSS from Pablo Villoslada */
-
 /* Posts */
 .posts {
     margin-left: auto;
     margin-right: auto;
 }
-
 .card { 
     width: 20rem;
     height: 20rem;
     border: none;
-    float: left;
-    display: flex;
 }
-
 .card-img-top {
     width: 20rem;
     height: 20rem;
