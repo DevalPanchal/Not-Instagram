@@ -36,7 +36,7 @@ export default {
     data(){
         return{
             username: "",
-            posts_amount: 6,
+            posts_amount: 0,
             friends: 0,
             description: "Default Description",
             posts: ["placeHolder1.png","placeHolder2.png","placeHolder3.png","placeHolder4.png","placeHolder5.png","placeHolder6.png"]
