@@ -2,7 +2,7 @@
     <div class="register" @submit.prevent="handleSubmit">
         <Card>
             <form class="register-form">
-                <h1>Instagram</h1>
+                <h1>Not-Instagram</h1>
                 <p>Sign up to see photos and videos from your friends.</p>
                 <input type="text" required v-model="username" placeholder="Username" />
 
@@ -60,6 +60,9 @@ export default {
                     this.$router.push("/");
                 } else {
                     console.log("Error fetching");
+                    this.error = parseResponse;
+                    this.username = "";
+                    this.password = "";
                 }
             }
         }
@@ -85,21 +88,25 @@ export default {
     gap: 10px;
 }
 .register-form {
-    height: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background-color: #fff;
+    // border: 1px solid #d1d1d1;
     gap: 25px;
-   
     p {
         margin: 0;
         font-weight: bold;
         width: 80%;
     }
+    button {
+        margin-bottom: 10px;
+    }
 }
 .card-2 {
+    margin: 25px;
     .login {
         display: inline-block; 
         color: #5dc1e2;

@@ -4,33 +4,37 @@
         <section class="nav-section">
             
             <!-- Search Button -->
-            <div class="dropdown" @click="fetchUsers">
-                <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <form id="search-form" role="search" @click="fetchUsers()">
+                <input v-model="searchString" type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
+                <div class="dropdown" @click="searchUsers()">
+                    <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                    <li class="list-item" v-for="user in users" :key="user">
-                        <form id="search-form" role="search">
-                        <input type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
-                        <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                        
+                    </ul>
+                </div>  
+            </form>
+        
             
             <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
             <i class="fa-solid fa-paper-plane"></i>
             
-            <!-- Friend Request Button -->
             <div class="dropdown" @click="fetchUsers">
                 <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-heart"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                     <li class="list-item" v-for="user in users" :key="user">
-                        <a class="dropdown-item">{{ user }}</a>
-                        <button v-if="this.requests.includes(user)" class="added-btn" disabled="true">sent</button>
-                        <button v-else class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                        <a v-if="!this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
+                        <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
+                        <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                    </li>
+                    <hr />
+                    <p class="requests">Requests</p>
+                    <li class="list-item" v-for="request in requests" :key="request">
+                        <a class="dropdown-item">{{ request }}</a>
+                        <button class="add-btn" @click="acceptFriendRequest(request)">Accept</button>
                     </li>
                 </ul>
             </div>
@@ -38,12 +42,14 @@
             <!-- <i class="fa-solid fa-heart"></i> -->
             <div class="dropdown">
                 <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i>
+                    <p>{{ this.currentUser }}</p> 
+                    <!-- <i class="fas fa-user"></i> -->
+                    <img :src="`../assets/logo.png`" class="profile-img" />
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
                     <li><a class="dropdown-item" href="#">Saved</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#" @click="routeTo(`/settings`)">Settings</a></li>
                     <hr />
                     <li><a class="dropdown-item" href="#" @click="logout">Log Out</a></li>
                 </ul>
@@ -61,11 +67,22 @@ export default {
     data() {
         return {
             users: [],
-            requests: []
+            requestSent: [],
+            requests: [],
+            friends: [],
+            currentUser: localStorage.username,
+            searchString: "",
+            filteredUsers: [],
         }
     },
     mounted() {
         this.fetchUserInfo();
+    },
+    updated(){
+        console.log(this.searchString);
+        console.log(this.users);
+        this.filteredUsers = this.users.filter((user) => user.toLowerCase().includes(this.searchString.toLowerCase()));
+        console.log(this.filteredUsers);
     },
     methods: {
         routeTo(route) {
@@ -73,6 +90,7 @@ export default {
         },
         logout() {
             localStorage.removeItem("token");
+            localStorage.removeItem("username");
             this.$router.push("/login");
         },
         stopDropDown(e) {
@@ -120,7 +138,30 @@ export default {
                     }
                 });
                 const parseRes = await res.json();
+                this.friends = [...parseRes.friends];
                 this.requests = [...parseRes.requests];
+                this.requestSent = [...parseRes.requestSent];
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async acceptFriendRequest(request) {
+            try {
+                const res = await fetch(`http://localhost:5000/friend/accept/${request}`, {
+                    method: "POST",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                console.log(parseRes);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async searchUsers() {
+            try {
+                alert(this.filteredUsers);
             } catch (error) {
                 console.error(error);
             }
@@ -171,10 +212,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    text-align: center;
     background-color: #fff;
     color: #2c3e50;
     border: none;
     transition: 0.1s;
+    p {
+        margin-bottom: 0;
+    }
     &:hover {
         background: none;
         color: #2c3e50;
@@ -213,34 +259,53 @@ export default {
         margin: 5px;
         font-weight: 100;
     }
+}
 
-    .search-btn {
-        width: 45px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #2c3e50;
+#search-form {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    border: 1px solid #2c3e50;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#query{
+    all: unset;
+    font: 16px system-ui;
+    height: 100%;
+    width: 100%;
+    padding: 5px 5px;
+}
+
+#dropdownMenuButton1{
+    width: auto;
+}
+
+::placeholder {
+    opacity: 0.7;   
+}   
+
+.requests {
+    padding-left: 15px;
+}
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+    padding: 2px;
+}
+
+.user {
+    img {
+        transition: 0.3s;
+        &:hover {
+            cursor: pointer;
+            background-color: #2c3e50;
+        }
     }
-
-    #search-form {
-        border-radius: 5px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border: 2px solid #2c3e50;
-    }
-
-    #query{
-        all: unset;
-        font: 16px system-ui;
-        height: 100%;
-        width: 100%;
-        padding: 5px 10px;
-    }
-
-    ::placeholder {
-        opacity: 0.7;   
-    }   
 }
 </style>

@@ -55,8 +55,10 @@ export default {
 
                     if (parseResponse.token) {
                         localStorage.setItem("token", parseResponse.token);
+                        localStorage.setItem("username", parseResponse.username);
                         this.username = "";
                         this.password = "";
+                        this.$toast.success("Logged in successfully!", { duration: 1000, position: "top-left" });
                         this.$router.push("/");
                     } else {
                         this.error = parseResponse;
@@ -64,7 +66,7 @@ export default {
                     }
                 } catch (error) {
                     console.error(error);
-                    
+                    this.$toast.error(error);
                 }
             }
         }

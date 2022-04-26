@@ -34,6 +34,7 @@ export default {
 				});
 				const parseResponse = await response.json();
 				parseResponse.verify === true ? this.authenticated = true : this.authenticated = false;
+				localStorage.setItem("username", parseResponse.name);
 			} catch (error) {
 				console.error(error);
 			}

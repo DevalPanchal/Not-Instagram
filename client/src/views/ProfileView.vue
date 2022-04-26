@@ -1,11 +1,15 @@
 <template>
     <div class="profileHeader">
         <Navbar />
-        <h1>{{ username }}</h1>
-        <table class="subheader">
+        <div class="header-content">
+            <h1>{{ username }}</h1>
+            <h3 @click="routeTo(`/settings`)">Settings</h3>
+            <i class="fa fa-cog" ></i>
+        </div>
+        <table>
             <tr>
-                <td>{{ posts_amount }} posts</td>
-                <td>{{ friends }} friends</td>
+                <td>{{ posts.length }} posts</td>
+                <td class="friends" @click="routeTo(`/friends`)">{{ friends }} friends</td>
             </tr>
         </table>
 
@@ -48,6 +52,9 @@ export default {
         this.getUserInfo();
     },
     methods: {
+        routeTo(route) {
+            this.$router.push(route);
+        },
         async getUserInfo(){
             try {
                 const res = await fetch("http://localhost:5000/user/get-user", {
