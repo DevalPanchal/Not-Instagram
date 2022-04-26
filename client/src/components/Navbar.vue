@@ -12,6 +12,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                         
+                        <a v-for="user in this.filteredUsers" :key="user" class="dropdown-item">{{ user + "\n" }}</a>
                     </ul>
                 </div>  
             </form>
@@ -77,12 +78,6 @@ export default {
     },
     mounted() {
         this.fetchUserInfo();
-    },
-    updated(){
-        console.log(this.searchString);
-        console.log(this.users);
-        this.filteredUsers = this.users.filter((user) => user.toLowerCase().includes(this.searchString.toLowerCase()));
-        console.log(this.filteredUsers);
     },
     methods: {
         routeTo(route) {
@@ -161,7 +156,10 @@ export default {
         },
         async searchUsers() {
             try {
-                alert(this.filteredUsers);
+                console.log(this.searchString);
+                console.log(this.users);
+                this.filteredUsers = this.users.filter((user) => user.toLowerCase().includes(this.searchString.toLowerCase()));
+                console.log(this.filteredUsers);
             } catch (error) {
                 console.error(error);
             }
