@@ -11,8 +11,11 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                        
-                        <a v-for="user in this.filteredUsers" :key="user" class="dropdown-item">{{ user + "\n" }}</a>
+                        <li v-for="user in this.filteredUsers" :key="user" class="list-item">
+                            <a v-if="this.filteredUsers.includes(user)" class="dropdown-item">{{ user }}</a>
+                            <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
+                            <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                        </li>
                     </ul>
                 </div>  
             </form>
@@ -27,9 +30,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                     <li class="list-item" v-for="user in users" :key="user">
-                        <a v-if="!this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
-                        <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
-                        <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                        <a v-if="this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
                     </li>
                     <hr />
                     <p class="requests">Requests</p>
