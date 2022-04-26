@@ -29,6 +29,7 @@
                     <i class="fa-solid fa-heart"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                    <p class="requests">Friends</p>
                     <li class="list-item" v-for="user in users" :key="user">
                         <a v-if="this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
                     </li>
