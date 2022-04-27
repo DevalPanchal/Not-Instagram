@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 
 const User = require("../model/user.model");
-const Post = require("../mode/post.model");
+const Post = require("../model/post.model");
 const { convertToBase64, convertImageBase64, generateRandomId } = require("../utility/image.utility");
 const auth = require("./auth/middleware/auth");
 

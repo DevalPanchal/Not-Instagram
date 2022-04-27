@@ -128,10 +128,6 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-
-            // TODO: add post to user's post array with
-            // post_title, post_description and post_picture
-            // along with an empty comments array
         }
     }
 }
