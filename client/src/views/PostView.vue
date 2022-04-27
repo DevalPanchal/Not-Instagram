@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import { objectTypeIndexer } from '@babel/types';
 import Navbar from '../components/Navbar.vue';
 export default {
     name: "Post",
@@ -153,17 +152,18 @@ export default {
             
             try {
                 console.log("Testing add")
-                /*
-                const body = { userId: new ObjectID(), title: "hello" };
+                
+                const body = { title: "hello" };
                 const response = await fetch("http://localhost:5000/post/add-post", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        token: localStorage.token
                     },
                     body: JSON.stringify(body)
                 });
                 const parseResponse = await response.json();
-
+                console.log("A")
                 console.log(parseResponse);
 
                 /*
@@ -180,8 +180,8 @@ export default {
                 }*/
 
 
-            } catch {
-
+            } catch (error) {
+                console.error(error);
             }
 
 

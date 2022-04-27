@@ -12,12 +12,12 @@ router.get("/all-posts", auth, async(req, res) => {
     try {
         // query db
         let allPosts = await Post.find();
-        console.log(allPosts);
+        // console.log(allPosts);
         // get all posts
         let posts = allPosts.map(
             (item) => item.title,
             (item) => item.likes
-            );
+        );
 
         res.json(posts);
     } catch (error) {
@@ -28,7 +28,18 @@ router.get("/all-posts", auth, async(req, res) => {
 
 // add post
 router.post("/add-post", auth, async(req, res) => {
+    try {
+        let postTitle = req.body.title;
+        let userID = req.user;
+        const newPost = await new Post({ userId: userID, title: postTitle, imagePath: "test", likes: 0 });
+        await newPost.save();
+        console.log(newPost)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json("server error");
+    }
 
+    /*
     try {
         
         let id = req.body.id;
@@ -66,6 +77,7 @@ router.post("/add-post", auth, async(req, res) => {
         console.log(error);
         res.status(500).json("server error");
     }
+    */
 });
 
 
