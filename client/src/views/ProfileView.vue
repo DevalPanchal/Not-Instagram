@@ -72,6 +72,7 @@ export default {
         },
         async getUserPosts(){
             try {
+                console.log("Testing fetch");
                 const res = await fetch("http://localhost:5000/post/all-posts", {
                     method: "GET",
                     headers: {
@@ -79,11 +80,8 @@ export default {
                     }
                 });
                 const parseRes = await res.json();
-                // parseRes.filter(); // TODO: filter all posts that are not from user
-                for (let i=0; i<parseRes.length; i++) {
-                    post_id.push(parseRes[i]._id);
-                    post_image_path.push(parseRes[i].imagePath);
-                }
+                console.log(parseRes);
+                
             } catch (error) {
                 console.error(error);
             }

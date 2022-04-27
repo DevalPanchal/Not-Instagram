@@ -15,8 +15,7 @@ router.get("/all-posts", auth, async(req, res) => {
         // console.log(allPosts);
         // get all posts
         let posts = allPosts.map(
-            (item) => item.title,
-            (item) => item.likes
+            (item) => item._id
         );
 
         res.json(posts);

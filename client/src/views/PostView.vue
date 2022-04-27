@@ -142,8 +142,6 @@ export default {
                 });
                 const parseRes = await res.json();
                 console.log(parseRes);
-                // this.friends = parseRes.friends.length;
-                // this.username = parseRes.username;
             } catch (error) {
                 console.error(error);
             }
