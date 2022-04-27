@@ -9,6 +9,8 @@ const userSchema = new Schema({
      friends: [String],
      requests: [String],
      requestSent: [String]
+     
+     
 }, {
      timestamps: true
 });

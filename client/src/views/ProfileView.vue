@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { text } from 'body-parser';
 import Navbar from '../components/Navbar.vue';
 export default {
     components: { Navbar },
@@ -119,6 +120,8 @@ export default {
         },
         createNewPost() {
             // TODO: Will add 
+            let newPost = await new Post({ title: "Hello", description: "123", image: "img", likes: 0 });
+            Post.updateOne({ });
         },
         loadMorePosts() {
             // TODO: will load 3-6 more posts from the postArray and put them 

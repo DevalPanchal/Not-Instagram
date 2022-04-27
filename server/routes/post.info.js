@@ -1,10 +1,50 @@
 const express = require("express");
 const router = express.Router();
 
-let User = require("../model/user.model");
+let Post = require("../model/post.model");
 
 const auth = require("./auth/middleware/auth");
 
+// get post by id
+router.get("/get-post", auth, async (req, res)=>{
+    try {
+        // Store postID
+        let postID = req.post;
+
+        console.log(req.post);
+
+        // get post info from db
+        let postInfo = await Post.findOne({ _id: postID });
+
+        res.json(postInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("server error");
+    }
+});
+
+// get post by user id
+// TODO: idk if this works, check the req stuff
+router.get("/get-post-by-user-id", auth, async (req, res)=>{
+    try {
+        // Store postID
+        let userID = req.userId;
+
+        console.log(req.userId);
+
+        // get post info from db
+        let postInfo = await Post.findOne({ userId: userID });
+
+        res.json(postInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("server error");
+    }
+});
+
+
+
+/*
 // TODO: add post
 router.post("/add/:post", auth, async (req, res) => {
     try {
@@ -128,3 +168,5 @@ router.delete("/delete/:comment", auth, async (req, res) => {
         res.status(500).json("Server error");
     }
 });
+
+*/
