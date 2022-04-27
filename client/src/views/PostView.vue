@@ -1,7 +1,7 @@
 <template>
     <div class="post">
         
-        <Navbar />
+        <!-- <Navbar /> -->
         
         <!-- <section class="left-panel">
         </section>
@@ -26,7 +26,7 @@
         </div>
         
     </div>
-        <button @click="onUpload" id="postButton" class="post-btn">Create Post</button>
+        <button @click="createPost" id="postButton" class="post-btn">Create Post</button>
     </div>
 </template>
 
@@ -43,16 +43,16 @@ export default {
             post_image: ""
         }
     },
-    mounted() {
+    // mounted() {
         // this.createPost()
-    },
+    // },
     methods: {
         // routeTo(route) {
         //     this.$router.push(route);
         // },
         chooseFile () {
-              this.$refs.fileInput.click()
-          },
+            this.$refs.fileInput.click()
+        },
         selectImgFile () {
             let fileInput = this.$refs.fileInput
             let imgFile = fileInput.files
@@ -65,7 +65,7 @@ export default {
               reader.readAsDataURL(imgFile[0])
               this.$emit('fileInput', imgFile[0])
             }
-          },
+        },
         handleChange(e) {
             const selectedFile = e.target.files[0];
             this.selectedFile = selectedFile;
@@ -105,13 +105,30 @@ export default {
                     }
                 });
                 const parseRes = await res.json();
-                this.friends = parseRes.friends.length;
-                this.username = parseRes.username;
+                // this.friends = parseRes.friends.length;
+                // this.username = parseRes.username;
             } catch (error) {
                 console.error(error);
             }
         },
-        createPost() {
+        async createPost() {
+            console.log("TESTING");
+
+            try {
+                const res = await fetch("http://localhost:5000/user/get-user", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                console.log(parseRes);
+                // this.friends = parseRes.friends.length;
+                // this.username = parseRes.username;
+            } catch (error) {
+                console.error(error);
+            }
+
             // TODO: add post to user's post array with
             // post_title, post_description and post_picture
             // along with an empty comments array
