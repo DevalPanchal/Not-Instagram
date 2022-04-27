@@ -4,6 +4,28 @@ const router = express.Router();
 let Post = require("../model/post.model");
 
 const auth = require("./auth/middleware/auth");
+
+router.get("/all-posts", auth, async(req, res) => {
+    try {
+        // query db
+        let allPosts = await Post.find();
+        console.log(allPosts);
+        // get all posts
+        let posts = allPosts.map(
+            (item) => item.title,
+            (item) => item.likes
+            );
+
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("server error");
+    }
+});
+
+
+
+
 /*
 // get post by id
 router.get("/get-post", auth, async (req, res)=>{

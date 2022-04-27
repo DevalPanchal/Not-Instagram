@@ -138,8 +138,8 @@ export default {
                         token: localStorage.token
                     }
                 });
-                // const parseRes = await res.json();
-                // console.log(parseRes);
+                const parseRes = await res.json();
+                console.log(parseRes);
                 // this.friends = parseRes.friends.length;
                 // this.username = parseRes.username;
             } catch (error) {
