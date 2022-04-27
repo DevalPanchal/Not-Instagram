@@ -71,4 +71,25 @@ router.get("/all-users", auth, async(req, res) => {
     }
 });
 
+// Post Description
+router.post("/post-desc", auth, async (req, res)=>{
+    try {
+        // get user id
+        let userID = req.user;
+
+        // get user info
+        let userInfo = await User.findOne({_id: userID});
+
+        // get req.body params
+        const description = req.body.description;
+
+        // update user
+        await User.updateOne({_id: userID, description: description});
+
+        res.json(description);
+   } catch (error) {
+        console.error(error);
+   }
+});
+
 module.exports = router;
