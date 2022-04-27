@@ -23,7 +23,7 @@
         <div class="image-container">
             <div class="image-grid-container">
                 <div v-for="post in posts" :key="post" class="card">
-                    <img :src="`../assets/${post}`" />
+                    <img :src="`../assets/${post}`" @click="routeTo(`/post`)" />
                 </div>
             </div>
         </div>
