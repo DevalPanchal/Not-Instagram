@@ -1,7 +1,7 @@
 <template>
     <div class="post">
         
-        <!-- <Navbar /> -->
+        <Navbar />
         
         <!-- <section class="left-panel">
         </section>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { objectTypeIndexer } from '@babel/types';
 import Navbar from '../components/Navbar.vue';
 export default {
     name: "Post",
@@ -115,7 +116,7 @@ export default {
             console.log("TESTING");
 
             try {
-                const res = await fetch("http://localhost:5000/user/get-user", {
+                const res = await fetch("http://localhost:5000/user/all-users", {
                     method: "GET",
                     headers: {
                         token: localStorage.token
@@ -128,7 +129,26 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+
+            try {
+                console.log("Testing fetch");
+                const res = await fetch("http://localhost:5000/post/all-posts", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                // const parseRes = await res.json();
+                // console.log(parseRes);
+                // this.friends = parseRes.friends.length;
+                // this.username = parseRes.username;
+            } catch (error) {
+                console.error(error);
+            }
         }
+
+
+
     }
 }
 </script>

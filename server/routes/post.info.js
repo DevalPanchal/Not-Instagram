@@ -4,7 +4,7 @@ const router = express.Router();
 let Post = require("../model/post.model");
 
 const auth = require("./auth/middleware/auth");
-
+/*
 // get post by id
 router.get("/get-post", auth, async (req, res)=>{
     try {
@@ -54,13 +54,13 @@ router.get("/all-posts", auth, async(req, res) => {
         // let postInfo = await Post.findOne({ _id: postID });
 
         // get all usernames
-        // let usernames = allUsers.map((item) => item.username);
+        let usernames = allPosts.map((item) => item.title);
 
         // remove user who requested the all user names
-        // usernames = usernames.filter((user) => user !== userInfo.username);
+        // usernames = usernames.filter((user) => user !== postInfo.username);
 
-        // res.json(usernames);
-        res.json(allPosts);
+        res.json(usernames);
+        // res.json(allPosts);
     } catch (error) {
         console.error(error);
         res.status(500).json("server error");
@@ -194,3 +194,5 @@ router.delete("/delete/:comment", auth, async (req, res) => {
 });
 
 */
+
+module.exports = router;

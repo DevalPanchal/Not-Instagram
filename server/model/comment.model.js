@@ -1,4 +1,4 @@
-const { ObjectId, Int32 } = require("bson");
+const { ObjectId } = require("bson");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -9,7 +9,7 @@ const commentSchema = new Schema({
     userId: { type: ObjectId, required: true, unique: true },
     postId: { type: ObjectId, required: true, unique: true },
     text: { type: String, required: true, unique: false },
-    likes: { type: Int32 }
+    likes: { type: Number }
 
 }, {
      timestamps: true
