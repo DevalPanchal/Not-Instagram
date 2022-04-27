@@ -166,20 +166,6 @@ export default {
                 console.log("A")
                 console.log(parseResponse);
 
-                /*
-                if (parseResponse.token) {
-                    localStorage.setItem("token", parseResponse.token);
-                    // this.username = "";
-                    // this.password = "";
-                    this.$router.push("/");
-                } else {
-                    console.log("Error fetching");
-                    this.error = parseResponse;
-                    // this.username = "";
-                    // this.password = "";
-                }*/
-
-
             } catch (error) {
                 console.error(error);
             }
