@@ -120,7 +120,6 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    
 }
 .settings {
     width: 60%;
@@ -139,6 +138,7 @@ export default {
             width: 100%;
         }
     }
+
     .left-panel {
         padding-top: 10px;
         width: 50%;
@@ -169,8 +169,6 @@ export default {
     .right-panel {
         width: 50%;
         padding: 10px;
-        // margin-left: auto;
-        // margin-right: auto;
     }
 }
 .post-btn{
