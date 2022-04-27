@@ -12,7 +12,9 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                         <li v-for="user in this.filteredUsers" :key="user" class="list-item">
-                            <a v-if="this.filteredUsers.includes(user)" class="dropdown-item">{{ user }}</a>
+                            <img class="profile-img" v-if="user.image" :src="user.image" />
+                            <img class="profile-img" v-else :src="`../assets/logo.png`" />
+                            <a v-if="this.filteredUsers.includes(user)" class="dropdown-item">{{ user.username }}</a>
                             <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
                             <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
                         </li>
@@ -71,13 +73,14 @@ export default {
     data() {
         return {
             users: [],
+            userImages: [],
             requestSent: [],
             requests: [],
             friends: [],
             currentUser: localStorage.username,
             searchString: "",
             filteredUsers: [],
-            profileImage: ""
+            profileImage: "",
         }
     },
     mounted() {
@@ -107,7 +110,9 @@ export default {
                 });
                 const parseRes = await response.json();  
                 this.users = [...parseRes];
-                // console.log(this.users);
+                this.userImages = [...parseRes.map(item => item.image)];
+
+                console.log(this.users);
             } catch (error) {
                 console.error(error);
             }
@@ -164,9 +169,9 @@ export default {
         },
         async searchUsers() {
             try {
-                console.log(this.searchString);
-                console.log(this.users);
-                this.filteredUsers = this.users.filter((user) => user.toLowerCase().includes(this.searchString.toLowerCase()));
+                // console.log(this.searchString);
+                // console.log(this.users);
+                this.filteredUsers = this.users.filter((user) => user.username.toLowerCase().includes(this.searchString.toLowerCase()));
                 console.log(this.filteredUsers);
             } catch (error) {
                 console.error(error);
