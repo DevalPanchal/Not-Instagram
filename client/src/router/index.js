@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import FriendsView from '../views/FriendsView.vue';
 import SettingsView from '../views/SettingsView.vue';
+import PostViewVue from "@/views/PostView.vue";
 
 const routes = [
   	{
@@ -50,6 +51,24 @@ const routes = [
 		path: "/settings",
 		name: "Settings",
 		component: SettingsView,
+		props: true,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/new-post",
+		name: "Post",
+		component: PostView,
+		props: true,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/post",
+		name: "Comment",
+		component: CommentView,
 		props: true,
 		meta: {
 			requiresAuth: true
