@@ -156,7 +156,8 @@ export default {
                 const response = await fetch("http://localhost:5000/post/add-post", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        token: localStorage.token
                     },
                     body: JSON.stringify(body)
                 });
