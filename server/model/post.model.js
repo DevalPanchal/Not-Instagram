@@ -9,7 +9,7 @@ const postSchema = new Schema({
     userId: { type: ObjectId, required: true, unique: true },
     title: { type: String, required: true, unique: false },
     image: { type: String, required: true, unique: false },
-    likes: { type: Int32 }
+    likes: { type: Number }
 
 }, {
      timestamps: true
