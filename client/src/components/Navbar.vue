@@ -1,66 +1,75 @@
 <template>
-    <nav class="header">
-        <h1>Not-Instagram</h1>
-        <section class="nav-section">
-            
-            <!-- Search Button -->
-            <form id="search-form" role="search" @click="fetchUsers()">
-                <input v-model="searchString" type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
-                <div class="dropdown" @click="searchUsers()">
-                    <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                        <li v-for="user in this.filteredUsers" :key="user" class="list-item">
-                            <img class="profile-img" v-if="user.image" :src="user.image" />
-                            <img class="profile-img" v-else :src="`../assets/logo.png`" />
-                            <a v-if="this.filteredUsers.includes(user)" class="dropdown-item">{{ user.username }}</a>
-                            <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
-                            <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
-                        </li>
-                    </ul>
-                </div>  
-            </form>
-        
-            
-            <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
-            <i class="fa-solid fa-paper-plane"></i>
-            
-            <div class="dropdown" @click="fetchUsers">
-                <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-heart"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
-                    <p class="requests">Friends</p>
-                    <li class="list-item" v-for="user in users" :key="user">
-                        <a v-if="this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
-                    </li>
-                    <hr />
-                    <p class="requests">Requests</p>
-                    <li class="list-item" v-for="request in requests" :key="request">
-                        <a class="dropdown-item">{{ request }}</a>
-                        <button class="add-btn" @click="acceptFriendRequest(request)">Accept</button>
-                    </li>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <h1 class="navbar-brand">Not-Instagram</h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    
                 </ul>
-            </div>
 
-            <!-- <i class="fa-solid fa-heart"></i> -->
-            <div class="dropdown">
-                <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <p>{{ this.currentUser }}</p> 
-                    <!-- <i class="fas fa-user"></i> -->
-                    <img v-if="profileImage" :src="profileImage" class="profile-img" alt="profile" />
-                    <img v-else :src="`../assets/logo.png`" class="profile-img" alt="profile" />
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Saved</a></li>
-                    <li><a class="dropdown-item" href="#" @click="routeTo(`/settings`)">Settings</a></li>
-                    <hr />
-                    <li><a class="dropdown-item" href="#" @click="logout">Log Out</a></li>
-                </ul>
+                <div class="right-side">
+                    <form id="search-form" role="search" @click="fetchUsers()">
+                        <input v-model="searchString" type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
+                        <div class="dropdown" @click="searchUsers()">
+                            <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                                <li v-for="user in this.filteredUsers" :key="user" class="list-item">
+                                    <img class="profile-img" v-if="user.image" :src="user.image" />
+                                    <img class="profile-img" v-else :src="`../assets/logo.png`" />
+                                    <a v-if="this.filteredUsers.includes(user)" class="dropdown-item">{{ user.username }}</a>
+                                    <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
+                                    <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                                </li>
+                            </ul>
+                        </div>  
+                    </form>
+
+                    <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
+                    <i class="fa-solid fa-paper-plane"></i>
+                    
+                    <div class="dropdown" @click="fetchUsers">
+                        <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
+                            <p class="requests">Friends</p>
+                            <li class="list-item" v-for="user in users" :key="user">
+                                <a v-if="this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
+                            </li>
+                            <hr />
+                            <p class="requests">Requests</p>
+                            <li class="list-item" v-for="request in requests" :key="request">
+                                <a class="dropdown-item">{{ request }}</a>
+                                <button class="add-btn" @click="acceptFriendRequest(request)">Accept</button>
+                            </li>
+                        </ul>
+                    </div>
+                    
+
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <p>{{ this.currentUser }}</p> 
+                            <!-- <i class="fas fa-user"></i> -->
+                            <img v-if="profileImage" :src="profileImage" class="profile-img" alt="profile" />
+                            <img v-else :src="`../assets/logo.png`" class="profile-img" alt="profile" />
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Saved</a></li>
+                            <li><a class="dropdown-item" href="#" @click="routeTo(`/settings`)">Settings</a></li>
+                            <hr />
+                            <li><a class="dropdown-item" href="#" @click="logout">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
     </nav>
 </template>
 
@@ -197,6 +206,23 @@ export default {
 </script>
 
 <style lang="scss">
+.navbar-brand {
+    margin: 0;
+    font-size: 42px;
+}
+.navbar {
+    background-color: #fff;
+}
+nav {
+    border-bottom: 1px solid #ddd;
+}
+.container-fluid {
+    flex-wrap: none;
+    gap: 10px;
+}
+.navbar-toggler {
+    width: 60px;
+}
 .header {
     // border: 1px solid red;
     display: flex;
@@ -217,10 +243,11 @@ export default {
         justify-content: center;
         align-items: center;
         gap: 20px;
-        i {
-            font-size: 25px;
-        }
+        
     }
+}
+i {
+    font-size: 25px;
 }
 .fa-solid {
     transition: 0.1s;
@@ -334,5 +361,15 @@ export default {
             background-color: #2c3e50;
         }
     }
+}
+
+.right-side {
+    @media (max-width: 550px) {
+        flex-direction: column;
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 </style>

@@ -107,6 +107,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 }
 .settings {
     width: 60%;
@@ -114,6 +115,17 @@ export default {
     border: 1px solid #d1d1d1;
     display: flex;
 
+    @media(max-width: 550px) {
+        flex-direction: column;
+        .left-panel {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid #d1d1d1;
+        }
+        .right-panel {
+            width: 100%;
+        }
+    }
     .left-panel {
         padding-top: 10px;
         width: 50%;

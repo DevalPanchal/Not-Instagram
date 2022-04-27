@@ -179,7 +179,17 @@ h2:after {
         display: grid;
         justify-content: center;
         align-content: center;
-        grid-template-columns: 1fr 1fr 1fr;
+        // grid-template-columns: 1fr 1fr 1fr 1fr;
+        @media (max-width: 650px) {
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 651px) and (max-width: 1000px) {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media (min-width: 1001px) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
         gap: 15px;
         .card {
             display: flex;
