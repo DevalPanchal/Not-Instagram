@@ -16,7 +16,19 @@
                     <li class="comments">{{comment.userId}}: {{ comment.text }}</li>
                 </ul>
                 <div class = "row" id="sendComment">
-                    <AddComment v-on:add-comment="insertComment" />
+                    <div class="addComment">
+                        <form @submit="addComment">
+                            
+                            <!-- need to replace placeholder with user profile picture -->
+                            
+                            <div id ="commenting" class ="input-group">
+                                <input type="text" v-model="commentText" name="commentbox" id="commentBox" placeholder="Write a comment!"/>
+                                <button type = "btn"  id = "commentButton"> Send </button>
+                            </div>
+
+                        
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,18 +46,7 @@ export default {
             post_title: "",
             post_description: "",
             post_image: "",
-            comments: [{ id: "0",
-                    userId: "0",
-                    postId: "0",
-                    text: "0",
-                    likes: 0
-                },
-                { id: "1",
-                    userId: "1",
-                    postId: "0",
-                    text: "123",
-                    likes: 69
-                }]
+            comments: []
             
         }
     },
@@ -53,10 +54,26 @@ export default {
         loadPost()
     },
     methods: {
-        insertComment(newComment){
-            console.log("comment added")
-            comments.push({id: "3", userId: "0", postId: "0", text: newComment, likes: 0});
-            console.log("comment added")
+        async insertComment(){
+            try {
+                console.log("Adding comment")
+                console.log(newComment)
+                this.commentText = te
+                const body = { postId: this.postID, text: this.commentText };
+                const response = await fetch("http://localhost:5000/comment/add-comment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    },
+                    body: JSON.stringify(body)
+                });
+                const parseResponse = await response.json();
+                console.log(parseResponse);
+
+            } catch (error) {
+                console.error(error);
+            }
 
         },
         loadPost() {
@@ -80,6 +97,35 @@ export default {
 </script>
 
 <style>
+#commenting{
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+    height:10px;
+}
+#dp{
+    width: 30px;
+    height: 30px;
+}
+#commentButton{
+    text-align: center;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 60px;
+    background-color:  #2c3e50;;
+    height: 30px;
+    padding: 0px;
+}
+#commentBox{
+    padding: 0px;
+    margin-left:auto;
+    margin-right:auto;
+    width: 81%;
+    height: 30px;
+}
+.addComment{
+        padding: 1rem;
+    }
 #sendComment{
     margin-top: 90%;
     margin-left: 0%;
@@ -106,6 +152,7 @@ export default {
     width: 350px;
     height: 500px;
     padding: 0px;
+
     margin-right: auto;
     border-collapse: collapse;
     }
