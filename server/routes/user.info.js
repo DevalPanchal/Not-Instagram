@@ -71,4 +71,5 @@ router.get("/all-users", auth, async(req, res) => {
     }
 });
 
+
 module.exports = router;
