@@ -68,33 +68,33 @@ router.get("/all-posts", auth, async(req, res) => {
 
 });
 
-/*
-// TODO: add post
+// add post
 router.post("/add/:post", auth, async (req, res) => {
     try {
-        // get user id
-        let userID = req.user;
+        // get post id
+        let postID = req.post;
 
-        // get friend name
+        // get post name
         let postName = req.params.post;
 
         // update original post array with new post
-        await User.updateOne(
-             { _id: req.user },
+        await Post.updateOne(
+             { _id: req.post },
              { $push: { posts: postName }}
         );
          
-        // get user info
-        let userInfo = await User.findOne({ _id: userID });
+        // get post info
+        let postInfo = await Post.findOne({ _id: postID });
 
-        // get user info
-        res.json(userInfo);
+        // get post info
+        res.json(postInfo);
     } catch (error) {
         console.error(error);
         res.status(500).json("Server error");
     }
 });
 
+/*
 // TODO: delete post
 router.delete("/delete/:post", auth, async (req, res) => {
     try {

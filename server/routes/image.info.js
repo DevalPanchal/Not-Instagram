@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 
 const User = require("../model/user.model");
+const Post = require("../mode/post.model");
 const { convertToBase64, convertImageBase64, generateRandomId } = require("../utility/image.utility");
 const auth = require("./auth/middleware/auth");
 
@@ -76,15 +77,15 @@ router.post("/upload-post-image", auth, async(req, res) => {
 
         uri = convertToBase64(extension, imageUri);
 
-        let userID = req.user;
+        let postID = req.post;
 
-        let userInfo = await User.findOne({ _id: userID });
+        let postInfo = await Post.findOne({ _id: postID });
         
-        let userPath = `${userInfo.imagePath}profile${extension}`;
+        let postPath = `${postInfo.imagePath}picture${extension}`;
 
-        fs.stat(userPath, (err) => {
+        fs.stat(postPath, (err) => {
             if (err) {
-                fs.writeFile(userPath, uri, 'base64', (err) => {
+                fs.writeFile(postPath, uri, 'base64', (err) => {
                     if (err) {
                         console.error("Error:", err);
                     } else {
@@ -105,18 +106,18 @@ router.post("/upload-post-image", auth, async(req, res) => {
 // TODO: fixme
 router.get("/post-image", auth, async (req, res) => {
     try {
-        let userID = req.user;
+        let postID = req.post;
 
-        let userInfo = await User.findOne({ _id: userID });
+        let postInfo = await Post.findOne({ _id: postID });
 
-        let userPath = userInfo.imagePath + "profile.jpg";
+        let postPath = postInfo.imagePath + "picture.jpg";
 
-        if (fs.existsSync(userPath)) {
-            let extension = userPath.match(/\.[0-9a-z]+$/i);
+        if (fs.existsSync(postPath)) {
+            let extension = postPath.match(/\.[0-9a-z]+$/i);
     
             let image = "";
     
-            image = convertImageBase64(userPath, extension[0]);
+            image = convertImageBase64(postPath, extension[0]);
             
             return res.json({ image });
         }

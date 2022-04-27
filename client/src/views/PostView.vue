@@ -30,7 +30,7 @@ export default {
         }
     },
     mounted() {
-        this.createPost()
+        // this.createPost()
     },
     methods: {
         // routeTo(route) {
@@ -62,6 +62,21 @@ export default {
                     console.log(parseRes);
                     this.$router.go();
                 }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getUserInfo(){
+            try {
+                const res = await fetch("http://localhost:5000/user/get-user", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                this.friends = parseRes.friends.length;
+                this.username = parseRes.username;
             } catch (error) {
                 console.error(error);
             }
