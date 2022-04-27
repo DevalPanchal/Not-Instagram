@@ -42,7 +42,31 @@ router.get("/get-post-by-user-id", auth, async (req, res)=>{
     }
 });
 
+// get all posts
+router.get("/all-posts", auth, async(req, res) => {
 
+    try {
+        // query db
+        let allPosts = await Post.find();
+
+        // let postID = req.post;
+
+        // let postInfo = await Post.findOne({ _id: postID });
+
+        // get all usernames
+        // let usernames = allUsers.map((item) => item.username);
+
+        // remove user who requested the all user names
+        // usernames = usernames.filter((user) => user !== userInfo.username);
+
+        // res.json(usernames);
+        res.json(allPosts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("server error");
+    }
+
+});
 
 /*
 // TODO: add post

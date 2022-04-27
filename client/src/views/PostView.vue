@@ -1,20 +1,20 @@
 <template>
-	<div class="post">
-		<Navbar />
-		
-        <div>
-            POST TITLE: [Textbox class="post-title"]
-        </div>
-        <div>
-            POST DESCRIPTION (optional): [Textbox class="post-description"]    
-        </div>
-        <div>
-            POST PICTURE: attach file [Image select class="post-picture"]
-        </div>
-        <div>
-            CREATE POST BUTTON [Button class="create-post-button", calls createPost()]
-        </div>
-	</div>
+    <div class="post">
+        
+        <Navbar />
+        
+        <section class="left-panel">
+        </section>
+            <section class="right-panel">
+            <h2>Post Title</h2>
+            <h2>Post Description</h2>
+            <h2>Post Image</h2>
+            <div class="file-upload">
+                <input type="file" @change="handleChange" />
+                <button @click="onUpload" class="post-btn">Create Post</button>
+            </div>
+        </section>
+    </div>
 </template>
 
 <script>
@@ -33,8 +33,38 @@ export default {
         this.createPost()
     },
     methods: {
-        routeTo(route) {
-            this.$router.push(route);
+        // routeTo(route) {
+        //     this.$router.push(route);
+        // },
+        handleChange(e) {
+            const selectedFile = e.target.files[0];
+            this.selectedFile = selectedFile;
+            let filename = this.selectedFile.name;
+            let reader = new FileReader();
+            reader.readAsDataURL(this.selectedFile);
+            reader.onload = () => {
+                this.imageUri = reader.result;                
+                this.extension = filename.match(/\.[0-9a-z]+$/i);
+            }
+        },
+        async onUpload() { // TODO: fix this
+            try {
+                const response = await fetch(`http://localhost:5000/image/upload-post-image`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    },
+                    body: JSON.stringify({ imageUri: this.imageUri, extension: this.extension })
+                });
+                const parseRes = await response.json();
+                if (parseRes) {
+                    console.log(parseRes);
+                    this.$router.go();
+                }
+            } catch (error) {
+                console.error(error);
+            }
         },
         createPost() {
             // TODO: add post to user's post array with

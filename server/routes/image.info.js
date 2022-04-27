@@ -20,7 +20,6 @@ router.post("/upload-profile-image", auth, async(req, res) => {
 
         let userInfo = await User.findOne({ _id: userID });
         
-
         let userPath = `${userInfo.imagePath}profile${extension}`;
 
         fs.stat(userPath, (err) => {
@@ -64,7 +63,68 @@ router.get("/profile-image", auth, async (req, res) => {
         console.error(error);
         res.status(500).json("Server error");
     }
-})
+});
+
+// upload post image
+// TODO: fixme
+router.post("/upload-post-image", auth, async(req, res) => {
+    try {
+        let imageUri = req.body.imageUri;
+        let extension = req.body.extension[0];
+
+        let uri = "";
+
+        uri = convertToBase64(extension, imageUri);
+
+        let userID = req.user;
+
+        let userInfo = await User.findOne({ _id: userID });
+        
+        let userPath = `${userInfo.imagePath}profile${extension}`;
+
+        fs.stat(userPath, (err) => {
+            if (err) {
+                fs.writeFile(userPath, uri, 'base64', (err) => {
+                    if (err) {
+                        console.error("Error:", err);
+                    } else {
+                        console.log("Image successfully stored!");
+                    }
+                })
+            }
+        });
+
+        res.json("Profile Image successfully stored!");
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("Server error");
+    }
+});
+
+// get post image
+// TODO: fixme
+router.get("/post-image", auth, async (req, res) => {
+    try {
+        let userID = req.user;
+
+        let userInfo = await User.findOne({ _id: userID });
+
+        let userPath = userInfo.imagePath + "profile.jpg";
+
+        if (fs.existsSync(userPath)) {
+            let extension = userPath.match(/\.[0-9a-z]+$/i);
+    
+            let image = "";
+    
+            image = convertImageBase64(userPath, extension[0]);
+            
+            return res.json({ image });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("Server error");
+    }
+});
 
 router.post("/upload", auth, async(req, res) => {
     try {

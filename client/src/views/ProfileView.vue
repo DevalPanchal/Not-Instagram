@@ -3,6 +3,7 @@
         <Navbar />
         <div class="header-content">
             <h1>{{ username }}</h1>
+            <h4 @click="routeTo(`/new-post`)">New Post</h4>
             <h3 @click="routeTo(`/settings`)">Settings</h3>
             <i class="fa fa-cog" ></i>
         </div>
@@ -80,7 +81,22 @@ export default {
     gap: 10px;
     justify-content: center;
     align-items: center;
+    
     h3 {
+        font-size: 20px;
+        border-radius: 5px;
+        border: 1px solid #d1d1d1;
+        padding: 5px 2px;
+        margin: 0;
+        transition: 0.2s;
+        &:hover {
+            cursor: pointer;
+            background: #d1d1d1;
+            color: #fff;
+        }
+    }
+
+    h4 {
         font-size: 20px;
         border-radius: 5px;
         border: 1px solid #d1d1d1;
