@@ -3,17 +3,30 @@
         
         <Navbar />
         
-        <section class="left-panel">
+        <!-- <section class="left-panel">
         </section>
             <section class="right-panel">
             <h2>Post Title</h2>
             <h2>Post Description</h2>
             <h2>Post Image</h2>
             <div class="file-upload">
-                <input type="file" @change="handleChange" />
-                <button @click="onUpload" class="post-btn">Create Post</button>
+                <input id="imageSelect" type="file" @change="handleChange" />
             </div>
-        </section>
+            <button @click="onUpload" id="postButton" class="post-btn">Create Post</button>
+        </section> -->
+        <div class="container">
+        <div
+          class="previewBlock"
+          @click="chooseFile"
+          :style="{ 'background-image': `url(${filePreview})` }">
+        </div>
+
+        <div>
+          <input class="form-control form-control-lg" ref="fileInput" type="file" id="formFileLg" @input="selectImgFile">
+        </div>
+        
+    </div>
+        <button @click="onUpload" id="postButton" class="post-btn">Create Post</button>
     </div>
 </template>
 
@@ -24,6 +37,7 @@ export default {
     components: { Navbar },
     data() {
         return {
+            filePreview: null,
             post_title: "",
             post_description: "",
             post_image: ""
@@ -36,6 +50,22 @@ export default {
         // routeTo(route) {
         //     this.$router.push(route);
         // },
+        chooseFile () {
+              this.$refs.fileInput.click()
+          },
+        selectImgFile () {
+            let fileInput = this.$refs.fileInput
+            let imgFile = fileInput.files
+
+            if (imgFile && imgFile[0]) {
+              let reader = new FileReader
+              reader.onload = e => {
+                this.filePreview = e.target.result
+              }
+              reader.readAsDataURL(imgFile[0])
+              this.$emit('fileInput', imgFile[0])
+            }
+          },
         handleChange(e) {
             const selectedFile = e.target.files[0];
             this.selectedFile = selectedFile;
@@ -76,5 +106,28 @@ export default {
 </script>
 
 <style>
+.container {
+        max-width: 600px;
+    }
+    .previewBlock {
+        display: block;
+        cursor: pointer;
+        width: 300px;
+        height: 280px;        
+        margin: 0 auto 20px;
+        background-position: center center;
+        background-size: cover;
+    }
+#imageSelect{
+    width: 300px;
+    height: 50px;
+}
+#postButton{
+    width: 100px;
+    height: 60px;
+    background-color:  #2c3e50;
+    color: white;
+    padding: 0px;
 
+}
 </style>
