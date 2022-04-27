@@ -286,6 +286,7 @@ export default {
 
 .requests {
     padding-left: 15px;
+    font-weight: bolder;
 }
 .profile-img {
     width: 50px;
