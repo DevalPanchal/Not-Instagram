@@ -152,7 +152,7 @@ export default {
             try {
                 console.log("Testing add")
                 
-                const body = { title: "hello" };
+                const body = { title: "hellso" };
                 const response = await fetch("http://localhost:5000/post/add-post", {
                     method: "POST",
                     headers: {

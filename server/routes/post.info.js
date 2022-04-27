@@ -29,11 +29,35 @@ router.get("/all-posts", auth, async(req, res) => {
 // add post
 router.post("/add-post", auth, async(req, res) => {
     try {
+
         let postTitle = req.body.title;
         let userID = req.user;
-        const newPost = await new Post({ userId: userID, title: postTitle, imagePath: "test", likes: 0 });
+
+        let postImagePath = "./storage/images/post_" + userID + "/";
+        // make user folder
+        fs.mkdir(userImagePath, (err) => {
+            if (err) {
+                    // check err
+                    console.log(err);
+            } else {
+                    // successful
+                    console.log("Post directory made!");
+            }
+        });
+
+        const newPost = await new Post({ userId: userID, title: postTitle, imagePath: postImagePath, likes: 0 });
         await newPost.save();
-        console.log(newPost)
+        console.log(newPost);
+
+        // get post id
+        let postID = newPost._id;
+
+        // generate token on payload of post id
+        const token = jwtGenerator(postID);
+
+        // res.json token
+        res.json({ token });
+
     } catch (error) {
         console.log(error);
         res.status(500).json("server error");
@@ -42,9 +66,6 @@ router.post("/add-post", auth, async(req, res) => {
     /*
     try {
         
-        let id = req.body.id;
-        // TODO
-        let postImagePath = "./storage/images/post_" + id + "/";
 
         // make user folder
         fs.mkdir(userImagePath, (err) => {
