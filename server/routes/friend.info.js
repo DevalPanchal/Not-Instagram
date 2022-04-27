@@ -218,6 +218,21 @@ router.get("/get/friend", auth, async(req, res) => {
         console.error(error);
         res.status(500).json("Server error");
     }
+});
+
+// get single user info
+router.get("/user/info/:username", auth, async(req, res) => {
+    try {
+        // get user name
+        const username = req.params.username;
+
+        // get user info
+        let userInfo = await User.findOne({ username: username });
+        
+        res.json(userInfo);
+    } catch (error) {
+        console.error(error);
+    }
 })
 
 module.exports = router;

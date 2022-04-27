@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import FriendsView from '../views/FriendsView.vue';
 import SettingsView from '../views/SettingsView.vue';
+import UserProfile from '../views/UserProfile.vue';
 
 const routes = [
   	{
@@ -50,6 +51,15 @@ const routes = [
 		path: "/settings",
 		name: "Settings",
 		component: SettingsView,
+		props: true,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/user-profile",
+		name: "Profile",
+		component: UserProfile,
 		props: true,
 		meta: {
 			requiresAuth: true
