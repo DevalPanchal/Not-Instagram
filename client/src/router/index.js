@@ -5,7 +5,8 @@ import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import FriendsView from '../views/FriendsView.vue';
 import SettingsView from '../views/SettingsView.vue';
-import PostViewVue from "@/views/PostView.vue";
+import PostView from "../views/PostView.vue";
+import CommentView from "../views/CommentView.vue"
 
 const routes = [
   	{
