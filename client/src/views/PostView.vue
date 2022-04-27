@@ -15,18 +15,19 @@
             <button @click="onUpload" id="postButton" class="post-btn">Create Post</button>
         </section> -->
         <div class="container">
-            
-        <div
-          class="previewBlock"
-          @click="chooseFile"
-          :style="{ 'background-image': `url(${filePreview})` }">
-        </div>
-
-        <div>
-          <input class="form-control form-control-lg" ref="fileInput" type="file" id="formFileLg" @input="selectImgFile">
-        </div>
-        
+            <div class="previewBlock" @click="chooseFile" :style="{ 'background-image': `url(${filePreview})` }">
+            </div>
+            <div>
+                <label for= "title">Upload an image: </label><input class="form-control form-control-lg" ref="fileInput" type="file" id="formFileLg" @input="selectImgFile">
+            </div>
+            <div>
+                <label for= "title">Title: </label><input type="text" name="titleInput" id="title" placeholder="Write a title!"/>
+            </div> 
+            <div >
+                <label for= "desc">Desc: </label> <input type="text" name="descInput" id="desc" placeholder="Write a description(optional)!"/>
+            </div>    
     </div>
+
         <button @click="createPost" id="postButton" class="post-btn">Create Post</button>
     </div>
 </template>
@@ -193,6 +194,16 @@ export default {
 </script>
 
 <style>
+#formFileLg{
+    display: inline-block;
+}
+#title{
+    padding: 2px;
+}
+
+#he{
+    display: inline-block;
+}
 .container {
         max-width: 600px;
     }
