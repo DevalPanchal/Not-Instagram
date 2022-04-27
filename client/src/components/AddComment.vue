@@ -5,7 +5,6 @@
         <!-- need to replace placeholder with user profile picture -->
         
         <div id ="commenting" class ="input-group">
-            <label for="title"> <img id="dp" src="..\..\..\server\storage\images\user_Amogus\profile.png" alt="" /> </label>
             <input type="text" v-model="comment" name="commentbox" id="commentBox" placeholder="Write a comment!"/>
             <button type = "btn"  id = "commentButton"> Send </button>
         </div>
@@ -49,7 +48,7 @@ export default {
 #commenting{
     margin-left:auto;
     margin-right:auto;
-    width:33%;
+    width:100%;
     height:10px;
 }
 #dp{
@@ -66,8 +65,11 @@ export default {
     padding: 0px;
 }
 #commentBox{
- width: 500px;
- height: 30px;
+    padding: 0px;
+    margin-left:auto;
+    margin-right:auto;
+    width: 81%;
+    height: 30px;
 }
 .addComment{
         padding: 1rem;
