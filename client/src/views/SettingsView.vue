@@ -17,11 +17,9 @@
                     <textarea cols="45" rows="5" maxlength="255" id="textarea" @keyup="countChars"></textarea>
 
                     <div class="char-count">
-                        <span id="chars">{{charCount}}</span>
-                        <span id="max"> / 255</span>
+                        <span id="chars">{{charCount}} / 255</span>
                     </div>
-                    
-                    <!-- <input type="text" maxlength="255"/> -->
+
                 </div>
             </section>
 
