@@ -21,10 +21,10 @@ router.post("/upload-profile-image", auth, async(req, res) => {
         let userInfo = await User.findOne({ _id: userID });
         
         let userPath = `${userInfo.imagePath}profile${extension}`;
-
+        fs.write
         fs.stat(userPath, (err) => {
             if (err) {
-                fs.writeFile(userPath, uri, 'base64', (err) => {
+                fs.writeFile(userPath, uri, { encoding: 'base64', flag: 'w' }, (err) => {
                     if (err) {
                         console.error("Error:", err);
                     } else {

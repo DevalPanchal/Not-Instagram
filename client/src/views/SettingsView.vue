@@ -136,8 +136,8 @@ export default {
     width: 150px;
     padding: 3px 5px;
     text-align: center;
-    background-color: #df3838;
     color: #fff;
+    background-color: #df3838;
     transition: 0.2s;
     &:hover {
         background-color: #f13838;
@@ -149,18 +149,35 @@ export default {
 }
 input[type="file"] {
     // display: block;
-	color: #dbdbdb;
+	color: #000;
 	cursor: pointer;
-	background: #1a242f;
+    padding: 0;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
 	// text-align: left;
 	// overflow: hidden;
 	// position: relative;
 	// border-radius: 6px;
+    &::-webkit-file-upload-button {
+        border: none;
+        background-color: #1a242f;
+        color: #dbdbdb;
+        transition: 0.2s;
+        height: 100%;
+        padding: 7px 5px;
+        &:hover {
+            cursor: pointer;
+            background-color: #283a52;
+        }
+    }
+}
+input[type="file"]{
 }
 .file-input {
     border: 1px solid #ccc;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+    
 }
 </style>
