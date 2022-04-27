@@ -12,11 +12,13 @@ export default {
 	components: { Navbar },
 	data() {
 		return {
-			authenticated : false
+			authenticated : false,
+			requests: []
 		}
 	},
 	mounted () {
 		this.isAuthorized();
+		this.getRequests();
 	},
 	methods: {
 		logout() {
@@ -39,6 +41,25 @@ export default {
 				console.error(error);
 			}
 		},
+		async getRequests() {
+			try {
+				const response = await fetch("http://localhost:5000/user/get-user", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						token: localStorage.token
+					}
+				});
+				const parseRes = await response.json();
+				this.requests = [...parseRes.requests];
+				console.log(this.requests);
+				if (this.requests.length > 0) {
+					this.$toast.success("You have a new friend request!", { duration: 1000, position: "top-left" });
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		}
 	}
 }
 </script>

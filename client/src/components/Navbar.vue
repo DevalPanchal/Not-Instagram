@@ -47,7 +47,8 @@
                 <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <p>{{ this.currentUser }}</p> 
                     <!-- <i class="fas fa-user"></i> -->
-                    <img :src="`../assets/logo.png`" class="profile-img" />
+                    <img v-if="profileImage" :src="profileImage" class="profile-img" alt="profile" />
+                    <img v-else :src="`../assets/logo.png`" class="profile-img" alt="profile" />
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#" @click="routeTo(`/profile`)">Profile</a></li>
@@ -76,10 +77,12 @@ export default {
             currentUser: localStorage.username,
             searchString: "",
             filteredUsers: [],
+            profileImage: ""
         }
     },
     mounted() {
         this.fetchUserInfo();
+        this.getProfileImage();
     },
     methods: {
         routeTo(route) {
@@ -152,6 +155,7 @@ export default {
                 });
                 const parseRes = await res.json();
                 console.log(parseRes);
+                this.$toast.warning(parseRes, { duration: 1000, position: "top-left" });
             } catch (error) {
                 console.error(error);
             }
@@ -166,6 +170,21 @@ export default {
                 console.error(error);
             }
         },
+        async getProfileImage() {
+			try {
+				const response = await fetch(`http://localhost:5000/image/profile-image`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						token: localStorage.token
+					}
+				});
+				const parseRes = await response.json();
+				this.profileImage = parseRes.image;
+			} catch (error) {
+				console.error(error);
+			}
+		}
     }
 }
 </script>
@@ -289,8 +308,8 @@ export default {
     font-weight: bolder;
 }
 .profile-img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: 2px solid black;
     padding: 2px;

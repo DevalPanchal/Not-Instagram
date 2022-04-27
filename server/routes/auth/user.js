@@ -65,7 +65,7 @@ router.post("/register", async(req, res) => {
           });
 
           // make new user
-          const newUser = await new User({ username, password: hashedPassword });
+          const newUser = await new User({ username, password: hashedPassword, imagePath: userImagePath });
           
           // get user id
           let userID = newUser._id;
@@ -148,8 +148,20 @@ router.delete("/delete/:username", auth, async (req, res) => {
 
           let userFolderPath = "./storage/images/user_" + username;
 
+          let files = "";
+
+          files = fs.readdirSync(userFolderPath);
+
+          for (const file of files) {
+               fs.unlinkSync(path.join(userFolderPath, file), (err) => {
+                    if (err) {
+                         console.error(err);
+                    }
+               })
+          }
+
           // delete user file
-          fs.rmdir(userFolderPath, (err) => {
+          fs.rmdirSync(userFolderPath, (err) => {
                if (err) {
                     console.log(err);
                } else {

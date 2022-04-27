@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const fileUpload = require("express-fileupload");
 
 require("dotenv").config();
 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 // middlewares
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 
 // database connections
 const uri = process.env.MONGO_URI;
@@ -28,11 +30,13 @@ connection.once('open', () => {
 const register = require("./routes/auth/user");
 const userRoute = require("./routes/user.info");
 const friendRoute = require("./routes/friend.info");
+const imageRoute = require("./routes/image.info");
+
 
 // app.use("/api/users", users);
 app.use("/auth/user", register);
 app.use("/user", userRoute);
 app.use("/friend", friendRoute);
-
+app.use("/image", imageRoute);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
