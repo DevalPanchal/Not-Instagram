@@ -17,11 +17,9 @@
                     <textarea cols="45" rows="5" maxlength="255" id="textarea" @keyup="countChars"></textarea>
 
                     <div class="char-count">
-                        <span id="chars">{{charCount}}</span>
-                        <span id="max"> / 255</span>
+                        <span id="chars">{{charCount}} / 255</span>
                     </div>
-                    
-                    <!-- <input type="text" maxlength="255"/> -->
+
                 </div>
             </section>
 
@@ -122,7 +120,6 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    
 }
 .settings {
     width: 60%;
@@ -141,6 +138,7 @@ export default {
             width: 100%;
         }
     }
+
     .left-panel {
         padding-top: 10px;
         width: 50%;
@@ -171,8 +169,6 @@ export default {
     .right-panel {
         width: 50%;
         padding: 10px;
-        // margin-left: auto;
-        // margin-right: auto;
     }
 }
 .post-btn{
