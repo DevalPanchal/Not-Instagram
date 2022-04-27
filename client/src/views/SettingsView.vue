@@ -12,6 +12,17 @@
                         <input type="file" @change="handleChange" class="file-input" />
                     </span>
                 </div>
+                <div class="description-box">
+                    <label>Description</label>
+                    <textarea cols="45" rows="5" maxlength="255" id="textarea" @keyup="countChars"></textarea>
+
+                    <div class="char-count">
+                        <span id="chars">{{charCount}}</span>
+                        <span id="max"> / 255</span>
+                    </div>
+                    
+                    <!-- <input type="text" maxlength="255"/> -->
+                </div>
             </section>
 
             <section class="right-panel">
@@ -36,6 +47,7 @@ export default {
             selectedFile: "",
             imageUri: "",
             extension: "",
+            charCount: 0,
             fileError: "file-size-error"
         }
     },
@@ -96,6 +108,9 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        countChars(){
+            this.charCount = document.getElementById("textarea").value.length;
         }
     }
 }
@@ -135,6 +150,22 @@ export default {
         }
         label {
             margin-right: 5%;
+        }
+        .description-box{
+            margin: 10px;
+            textarea {
+                height: 6rem;
+                width: 25rem;
+                margin-left: 2.3rem;
+                border-radius: 5px;
+            }
+            // label {
+            //     margin-right: 5%;
+            //     padding-bottom: 5%;
+            // }
+            .char-count {
+                float: right;
+            }
         }
     }
     .right-panel {
