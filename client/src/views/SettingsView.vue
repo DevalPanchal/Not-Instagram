@@ -7,7 +7,10 @@
             <section class="left-panel">
                 <div class="file-upload">
                     <label>Profile Picture</label>
-                    <input type="file" @change="handleChange" />
+                    <span>
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <input type="file" @change="handleChange" class="file-input" />
+                    </span>
                 </div>
             </section>
 
@@ -143,5 +146,21 @@ export default {
 #settingsH2{
     text-align: center;
     margin-top: 2rem;
+}
+input[type="file"] {
+    // display: block;
+	color: #dbdbdb;
+	cursor: pointer;
+	background: #1a242f;
+	// text-align: left;
+	// overflow: hidden;
+	// position: relative;
+	// border-radius: 6px;
+}
+.file-input {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }
 </style>

@@ -42,7 +42,7 @@ export default {
             posts_amount: 0,
             friends: 0,
             description: "Default Description",
-            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png"]
+            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png"]
         }
     },
     mounted() {
@@ -174,6 +174,7 @@ h2:after {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fafafa;
     .image-grid-container {
         display: grid;
         justify-content: center;
