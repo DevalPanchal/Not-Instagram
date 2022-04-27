@@ -11,7 +11,7 @@
                 </ul>
 
                 <div class="right-side">
-                    <form id="search-form" role="search" @click="fetchUsers()">
+                    <form id="search-form" role="search" @click.prevent="fetchUsers()">
                         <input v-model="searchString" type="search" id="query" placeholder="Search user..." name="q" aria-label="Search for user">
                         <div class="dropdown" @click="searchUsers()">
                             <button class="btn btn-secondary users dropdown-toggle" type="button" id="search" data-bs-toggle="dropdown" aria-expanded="false">
@@ -22,16 +22,13 @@
                                     <img class="profile-img" v-if="user.image" :src="user.image" />
                                     <img class="profile-img" v-else :src="`../assets/logo.png`" />
                                     <a v-if="this.filteredUsers.includes(user)" class="dropdown-item">{{ user.username }}</a>
-                                    <button v-if="this.requestSent.includes(user)" class="added-btn" disabled="true">sent</button>
-                                    <button v-else-if="!this.friends.includes(user)" class="add-btn" @click="sendFriendRequest(user)">Add</button>
+                                    <button v-if="this.requestSent.includes(user.username)" class="added-btn" disabled="true">sent</button>
+                                    <button v-else-if="!this.friends.includes(user.username)" class="add-btn" @click.prevent="sendFriendRequest(user.username)">Add</button>
                                 </li>
                             </ul>
                         </div>  
                     </form>
 
-                    <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
-                    <i class="fa-solid fa-paper-plane"></i>
-                    
                     <div class="dropdown" @click="fetchUsers">
                         <button class="btn btn-secondary users dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-heart"></i>
@@ -49,8 +46,10 @@
                             </li>
                         </ul>
                     </div>
-                    
 
+                    <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
+                    <i class="fa-solid fa-paper-plane"></i>
+                    
                     
                     <div class="dropdown">
                         <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,6 +66,7 @@
                             <li><a class="dropdown-item" href="#" @click="logout">Log Out</a></li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -169,9 +169,14 @@ export default {
                 });
                 const parseRes = await res.json();
                 console.log(parseRes);
+                // remove after accepting friend
+                this.requests.slice(request, 1);
+
+                this.$toast.success("friend request accepted", { duration: 2000, position: "top-left" });
                 if (typeof parseRes === "string") {
                     this.$toast.warning(parseRes, { duration: 1000, position: "top-left" });
                 }
+
             } catch (error) {
                 console.error(error);
             }
