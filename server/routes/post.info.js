@@ -1,3 +1,5 @@
+const { ObjectId } = require("bson");
+const console = require("console");
 const express = require("express");
 const router = express.Router();
 
@@ -5,6 +7,7 @@ let Post = require("../model/post.model");
 
 const auth = require("./auth/middleware/auth");
 
+// get all posts
 router.get("/all-posts", auth, async(req, res) => {
     try {
         // query db
@@ -23,7 +26,47 @@ router.get("/all-posts", auth, async(req, res) => {
     }
 });
 
+// add post
+router.post("/add-post", auth, async(req, res) => {
 
+    try {
+        
+        let id = req.body.id;
+        // TODO
+        let postImagePath = "./storage/images/post_" + id + "/";
+
+        // make user folder
+        fs.mkdir(userImagePath, (err) => {
+            if (err) {
+                 // check err
+                 console.log(err);
+            } else {
+                 // successful
+                 console.log("User directory made!");
+            }
+       });
+       
+
+       let userId = req.body.userId;
+       let title = req.body.title;
+       let imagePath = "lol";
+       let likes = 0;
+
+       const newPost = await new Post({ userId, title, imagePath, likes });
+       let postID = newPost._id;
+       await newPost.save();
+       
+       // generate token on payload of user id
+       const token = jwtGenerator(postID);
+
+       // res.json token
+       res.json({ token });
+    
+    } catch (error) {
+        console.log(error);
+        res.status(500).json("server error");
+    }
+});
 
 
 /*
