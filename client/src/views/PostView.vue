@@ -114,7 +114,7 @@ export default {
         },
         async createPost() {
             console.log("TESTING");
-
+            // TODO: testing fetch users
             try {
                 const res = await fetch("http://localhost:5000/user/all-users", {
                     method: "GET",
@@ -130,6 +130,7 @@ export default {
                 console.error(error);
             }
 
+            // TODO: testing fetch post
             try {
                 console.log("Testing fetch");
                 const res = await fetch("http://localhost:5000/post/all-posts", {
@@ -145,6 +146,43 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+
+            // TODO: testing add post
+            
+            try {
+                console.log("Testing add")
+                /*
+                const body = { userId: new ObjectID(), title: "hello" };
+                const response = await fetch("http://localhost:5000/post/add-post", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                });
+                const parseResponse = await response.json();
+
+                console.log(parseResponse);
+
+                /*
+                if (parseResponse.token) {
+                    localStorage.setItem("token", parseResponse.token);
+                    // this.username = "";
+                    // this.password = "";
+                    this.$router.push("/");
+                } else {
+                    console.log("Error fetching");
+                    this.error = parseResponse;
+                    // this.username = "";
+                    // this.password = "";
+                }*/
+
+
+            } catch {
+
+            }
+
+
         }
 
 
