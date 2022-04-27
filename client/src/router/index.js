@@ -58,7 +58,7 @@ const routes = [
 	},
 	{
 		path: "/user-profile",
-		name: "Profile",
+		name: "UserProfile",
 		component: UserProfile,
 		props: true,
 		meta: {

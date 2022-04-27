@@ -73,8 +73,8 @@ export default {
                         }
                     });
                     const data = await response.json();
-                    console.log(data);
-                    this.usersName = data.username;
+                    localStorage.setItem("userProf", JSON.stringify(data));
+                    this.$router.push("/user-profile");
                 }
             } catch (error) {
                 console.error(error);
