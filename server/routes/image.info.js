@@ -20,7 +20,6 @@ router.post("/upload-profile-image", auth, async(req, res) => {
 
         let userInfo = await User.findOne({ _id: userID });
         
-
         let userPath = `${userInfo.imagePath}profile${extension}`;
 
         fs.stat(userPath, (err) => {
