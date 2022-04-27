@@ -27,7 +27,7 @@
 
             <section class="right-panel">
                 <div class="file-upload">
-                    <button @click="onUpload" class="post-btn">Upload image</button>
+                    <button @click="onUpload" class="post-btn" :class="fileError" >Upload image</button>
                 </div>
 
                 <button class="delete-btn" @click="deleteAccount">Delete account</button>
@@ -47,7 +47,8 @@ export default {
             selectedFile: "",
             imageUri: "",
             extension: "",
-            charCount: 0
+            charCount: 0,
+            fileError: "file-size-error"
         }
     },
     methods: {
@@ -78,9 +79,15 @@ export default {
             let filename = this.selectedFile.name;
             let reader = new FileReader();
             reader.readAsDataURL(this.selectedFile);
-            reader.onload = () => {
-                this.imageUri = reader.result;                
-                this.extension = filename.match(/\.[0-9a-z]+$/i);
+            if (this.selectedFile.size < 65000) {
+                this.fileError = "";
+                reader.onload = () => {
+                    this.imageUri = reader.result;                
+                    this.extension = filename.match(/\.[0-9a-z]+$/i);
+                }
+            } else {
+                this.$toast.warning("Image size is too large", { duration: 3000, position: "top-left" });
+                this.fileError = "file-size-error";
             }
         },
         async onUpload() {
@@ -179,16 +186,11 @@ export default {
     margin-top: 2rem;
 }
 input[type="file"] {
-    // display: block;
 	color: #000;
 	cursor: pointer;
     padding: 0;
     background-color: #fff;
     border: 1px solid #dbdbdb;
-	// text-align: left;
-	// overflow: hidden;
-	// position: relative;
-	// border-radius: 6px;
     &::-webkit-file-upload-button {
         border: none;
         background-color: #1a242f;
@@ -202,13 +204,14 @@ input[type="file"] {
         }
     }
 }
-input[type="file"]{
-}
 .file-input {
     border: 1px solid #ccc;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
     
+}
+.file-size-error {
+    display: none;
 }
 </style>
