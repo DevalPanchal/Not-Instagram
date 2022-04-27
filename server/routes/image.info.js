@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 
 const User = require("../model/user.model");
-const { convertToBase64, convertImageBase64 } = require("../utility/image.utility");
+const { convertToBase64, convertImageBase64, generateRandomId } = require("../utility/image.utility");
 const auth = require("./auth/middleware/auth");
 
 // upload profile image
@@ -19,6 +19,7 @@ router.post("/upload-profile-image", auth, async(req, res) => {
         let userID = req.user;
 
         let userInfo = await User.findOne({ _id: userID });
+        
 
         let userPath = `${userInfo.imagePath}profile${extension}`;
 
@@ -48,16 +49,17 @@ router.get("/profile-image", auth, async (req, res) => {
 
         let userInfo = await User.findOne({ _id: userID });
 
-
         let userPath = userInfo.imagePath + "profile.jpg";
 
-        let extension = userPath.match(/\.[0-9a-z]+$/i);
-
-        let image = "";
-        
-        image = convertImageBase64(userPath, extension[0]);
-
-        res.json({ image });
+        if (fs.existsSync(userPath)) {
+            let extension = userPath.match(/\.[0-9a-z]+$/i);
+    
+            let image = "";
+    
+            image = convertImageBase64(userPath, extension[0]);
+            
+            return res.json({ image });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json("Server error");
@@ -73,11 +75,6 @@ router.post("/upload", auth, async(req, res) => {
         let uri = "";
         // decode base64 image
         uri = convertToBase64(extension, imageUri);
-        // if (extension === ".jpg") {
-        //     uri = await imageUri.replace(/^data:image\/jpeg;base64,/, "");
-        // } else if (extension === ".png") {
-        //     uri = await imageUri.replace(/^data:image\/png;base64,/, "");
-        // }
 
         // get user id
         let userID = req.user;

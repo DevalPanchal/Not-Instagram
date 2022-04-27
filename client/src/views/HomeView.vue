@@ -54,7 +54,7 @@ export default {
 				this.requests = [...parseRes.requests];
 				console.log(this.requests);
 				if (this.requests.length > 0) {
-					this.$toast.success("You have a new friend request!", { duration: 1000, position: "top-left" });
+					this.$toast.success("You have a new friend request!", { duration: 3000, position: "top-left" });
 				}
 			} catch (error) {
 				console.error(error);

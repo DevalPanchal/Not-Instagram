@@ -1,4 +1,5 @@
 const fs = require("fs");
+const crypto = require("crypto");
 
 function convertToBase64(extension, uri) {
     if (extension === ".jpg" || extension === ".jpeg") {
@@ -24,7 +25,12 @@ function convertImageBase64(imagePath, extension) {
     return imagePath;
 }
 
+function generateRandomId() {
+    return crypto.randomBytes(3).toString("hex");
+}
+
 module.exports = {
     convertToBase64,
-    convertImageBase64
+    convertImageBase64,
+    generateRandomId
 }

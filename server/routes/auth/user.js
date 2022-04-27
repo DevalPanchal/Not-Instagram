@@ -8,7 +8,12 @@ let User = require("../../model/user.model");
 const jwtGenerator = require("../../utility/jwtToken");
 const auth = require("./middleware/auth");
 
+const util = require("util");
 const fs = require('fs');
+const readdir = util.promisify(fs.readdir);
+const rmdir = util.promisify(fs.rmdir);
+
+const path = require("path");
 
 
 // verify jwt token
@@ -143,6 +148,7 @@ router.get("/:username", auth, async (req, res) => {
 // delete user
 router.delete("/delete/:username", auth, async (req, res) => {
      try {
+          let userID = req.user;
           // get username from query parameter
           let username = req.params.username;
 
@@ -150,7 +156,7 @@ router.delete("/delete/:username", auth, async (req, res) => {
 
           let files = "";
 
-          files = fs.readdirSync(userFolderPath);
+          files = await readdir(userFolderPath);
 
           for (const file of files) {
                fs.unlinkSync(path.join(userFolderPath, file), (err) => {
@@ -161,7 +167,7 @@ router.delete("/delete/:username", auth, async (req, res) => {
           }
 
           // delete user file
-          fs.rmdirSync(userFolderPath, (err) => {
+          await rmdir(userFolderPath, (err) => {
                if (err) {
                     console.log(err);
                } else {
@@ -170,7 +176,7 @@ router.delete("/delete/:username", auth, async (req, res) => {
           });
 
           // delete user -> can also be written await User.deleteOne({ username: username })
-          await User.deleteOne({ username });
+          await User.deleteOne({ _id: userID });
 
           res.json(`${username} has been deleted from DB`);
      } catch (error) {

@@ -155,7 +155,9 @@ export default {
                 });
                 const parseRes = await res.json();
                 console.log(parseRes);
-                this.$toast.warning(parseRes, { duration: 1000, position: "top-left" });
+                if (typeof parseRes === "string") {
+                    this.$toast.warning(parseRes, { duration: 1000, position: "top-left" });
+                }
             } catch (error) {
                 console.error(error);
             }
