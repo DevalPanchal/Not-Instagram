@@ -1,16 +1,21 @@
 <template>
     <div class="settings-container">
         <Navbar />
-        
+
+        <h2 id="settingsH2">Settings</h2>
         <div class="settings">
             <section class="left-panel">
-            </section>
-            <section class="right-panel">
-                <h2>Settings</h2>
                 <div class="file-upload">
+                    <label>Profile Picture</label>
                     <input type="file" @change="handleChange" />
+                </div>
+            </section>
+
+            <section class="right-panel">
+                <div class="file-upload">
                     <button @click="onUpload" class="post-btn">Upload image</button>
                 </div>
+
                 <button class="delete-btn" @click="deleteAccount">Delete account</button>
             </section>
         </div>
@@ -100,13 +105,28 @@ export default {
     display: flex;
 
     .left-panel {
-        width: 30%;
+        padding-top: 10px;
+        width: 50%;
         border-right: 1px solid #d1d1d1;
+        input {
+            border-radius: 5px;
+        }
+        label {
+            margin-right: 5%;
+        }
     }
     .right-panel {
-        width: 70%;
+        width: 50%;
         padding: 10px;
+        // margin-left: auto;
+        // margin-right: auto;
     }
+}
+.post-btn{
+    margin-bottom: 10px;
+    width: 50%;
+    height: 3rem;
+    border-radius: 5px;
 }
 .delete-btn {
     border: none;
@@ -119,5 +139,9 @@ export default {
     &:hover {
         background-color: #f13838;
     }
+}
+#settingsH2{
+    text-align: center;
+    margin-top: 2rem;
 }
 </style>

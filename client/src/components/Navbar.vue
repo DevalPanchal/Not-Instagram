@@ -282,6 +282,10 @@ export default {
     }
 }
 
+#dropdownMenuButton1{
+    width: auto;
+}
+
 #search-form {
     border-radius: 5px;
     display: flex;
