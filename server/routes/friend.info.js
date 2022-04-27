@@ -4,6 +4,8 @@ const router = express.Router();
 let User = require("../model/user.model");
 
 const auth = require("./auth/middleware/auth");
+const fs = require("fs");
+const { convertImageBase64 } = require("../utility/image.utility");
 
 // add friend
 router.post("/add/:friend", auth, async (req, res) => {
@@ -166,5 +168,56 @@ router.post("/accept/:friend", auth, async (req, res) => {
         res.status(404).json("Server error");
     }
 });
+
+// get friend info
+router.get("/get/friend", auth, async(req, res) => {
+    try {
+        // get userID
+        let userID = req.user;
+
+        // get user info
+        let userInfo = await User.findOne({ _id: userID });
+
+        // get user friends
+        let friends = [...userInfo.friends];
+
+        let userImages = [];
+
+        let image = "";
+        // get friend info
+        for (let i = 0; i < friends.length; i++) {
+            // fetch friend info
+            let friendInfo = await User.findOne({ username: friends[i] });
+            
+            let userPath = friendInfo.imagePath + "profile.jpg";
+
+            if (fs.existsSync(userPath)) {
+                let extension = userPath.match(/\.[0-9a-z]+$/i);
+
+                image = convertImageBase64(userPath, extension[0]);
+
+                userImages.push(image);
+            }
+            // console.log(friendInfo.imagePath);
+        }
+
+        let result = [];
+
+        for (let i = 0; i < friends.length; i++) {
+            result.push({
+                username: friends[i],
+                image: userImages[i]
+            });
+            if (i === friends.length - 1) {
+                res.json(result);
+            }
+        }
+
+        // res.json(friends);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json("Server error");
+    }
+})
 
 module.exports = router;
