@@ -15,6 +15,7 @@
             <button @click="onUpload" id="postButton" class="post-btn">Create Post</button>
         </section> -->
         <div class="container">
+            
         <div
           class="previewBlock"
           @click="chooseFile"
