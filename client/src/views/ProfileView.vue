@@ -43,7 +43,9 @@ export default {
             posts_amount: 0,
             friends: 0,
             description: "Default Description",
-            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png"]
+            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png"],
+            post_id: [],
+            post_image_path: []
         }
     },
     mounted() {
@@ -67,7 +69,26 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        async getUserPosts(){
+            try {
+                const res = await fetch("http://localhost:5000/post/all-posts", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                // parseRes.filter(); // TODO: filter all posts that are not from user
+                for (let i=0; i<parseRes.length; i++) {
+                    post_id.push(parseRes[i]._id);
+                    post_image_path.push(parseRes[i].imagePath);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
+
     }
 }
 
