@@ -178,8 +178,6 @@ router.get("/get/friend", auth, async(req, res) => {
         // get user info
         let userInfo = await User.findOne({ _id: userID });
 
-        // console.log(userInfo);
-
         // get user friends
         let friends = [...userInfo.friends];
 
@@ -193,13 +191,7 @@ router.get("/get/friend", auth, async(req, res) => {
             // fetch friend info
             let friendInfo = await User.findOne({ username: friends[i] });
 
-            if (friendInfo.description != null){
-                // console.log(friendInfo.description);
-                friendDesc.push(friendInfo.description);
-            } else {
-                // console.log("empty");
-                friendDesc[i].push(" ");
-            }
+            friendDesc.push(friendInfo.description);           
 
             let userPath = friendInfo.imagePath + "profile.jpg";
 
