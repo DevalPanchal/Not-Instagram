@@ -4,8 +4,8 @@
 		<!-- <button @click="logout">logout [remove later]</button> -->
 		<div class="posts">
 			<div class="post" v-for="post in posts" :key="post">
-				<h2>{{ post.title }}</h2>
 				<img :src="post.image" class="post-image" />
+				<h2>{{ post.title }}</h2>
 				<p v-if="post.description"><strong>Description:</strong> {{ post.description }}</p>
 			</div>
 		</div>
@@ -79,7 +79,12 @@ export default {
 				});
 				const data = await response.json();
 				console.log(data);
-				this.posts = [...data];
+				if (data === "No images") {
+					this.posts = [];
+				} else {
+
+					this.posts = [...data];
+				}
 			} catch (error) {
 				console.error(error);
 			}
