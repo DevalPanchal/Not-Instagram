@@ -39,7 +39,6 @@ export default {
         },
         async handleSubmit() {
             // this.error = this.username.length > 3 ? "" : "Username must be greater than 3 characters";
-            if (!this.error) {
                 try {
                     const body = { username: this.username, password: this.password };
                     const response = await fetch("http://localhost:5000/auth/user/login", {
@@ -69,8 +68,7 @@ export default {
                     this.$toast.error(error);
                 }
             }
-        }
-    },
+        },
     mounted() {
         if (localStorage.token) {
             this.$router.push("/");
