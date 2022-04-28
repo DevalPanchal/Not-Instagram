@@ -7,6 +7,7 @@
                 <img v-if="friend.image" :src="friend.image" class="profile-img" alt="profile" />
                 <img v-else :src="`../assets/logo.png`" class="profile-img" alt="profile" />
                 <h2>{{ friend.username }}</h2>
+                <p>{{friend.description}}</p>
             </li>
         </ul>
     </div>
@@ -21,8 +22,7 @@ export default {
     data() {
         return {
             friends: [],
-            usersName: "",
-            description: ""
+            usersName: ""
         }
     },
     mounted() {
@@ -112,6 +112,11 @@ export default {
             h2 {
                 width: 50%;
                 text-align: left;
+                width: 30%;
+            }
+            p{
+                text-align: left;
+                width: 70%;
             }
             &:hover {
                 cursor: pointer;

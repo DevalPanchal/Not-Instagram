@@ -178,17 +178,29 @@ router.get("/get/friend", auth, async(req, res) => {
         // get user info
         let userInfo = await User.findOne({ _id: userID });
 
+        // console.log(userInfo);
+
         // get user friends
         let friends = [...userInfo.friends];
 
-        let userImages = [];
+        let userImages = [];      
+
+        let friendDesc = [];
 
         let image = "";
         // get friend info
         for (let i = 0; i < friends.length; i++) {
             // fetch friend info
             let friendInfo = await User.findOne({ username: friends[i] });
-            
+
+            if (friendInfo.description != null){
+                // console.log(friendInfo.description);
+                friendDesc.push(friendInfo.description);
+            } else {
+                // console.log("empty");
+                friendDesc[i].push(" ");
+            }
+
             let userPath = friendInfo.imagePath + "profile.jpg";
 
             if (fs.existsSync(userPath)) {
@@ -206,7 +218,8 @@ router.get("/get/friend", auth, async(req, res) => {
         for (let i = 0; i < friends.length; i++) {
             result.push({
                 username: friends[i],
-                image: userImages[i]
+                image: userImages[i],
+                description: friendDesc[i]                
             });
             if (i === friends.length - 1) {
                 res.json(result);
