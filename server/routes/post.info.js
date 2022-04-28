@@ -2,8 +2,12 @@ const { ObjectId } = require("bson");
 const console = require("console");
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 
 let Post = require("../model/post.model");
+const User = require("../model/user.model");
+const { generateRandomId, convertToBase64, convertImageBase64 } = require("../utility/image.utility");
+
 
 const auth = require("./auth/middleware/auth");
 
@@ -12,51 +16,116 @@ router.get("/all-posts", auth, async(req, res) => {
     try {
         // query db
         let allPosts = await Post.find();
-        // console.log(allPosts);
-        // get all posts
-        // let posts = allPosts.map(
-        //     (item) => item._id
-        // );
+        let result = [];
 
-        res.json(allPosts);
+        for (let i = 0; i < allPosts.length; i++) {
+            let imagepath = allPosts[i].imagePath;
+
+            let image = "";
+            if (fs.existsSync(imagepath)) {
+                image = convertImageBase64(imagepath, allPosts[i].extension);
+            }
+            
+            result.push({
+                username: allPosts[i].username,
+                title: allPosts[i].title,
+                description: allPosts[i].description,
+                image: image
+            });
+            
+
+            if (i === allPosts.length - 1) {
+                return res.json(result);
+            }
+        }
+
+
+        res.json("No images");
     } catch (error) {
         console.error(error);
         res.status(500).json("server error");
     }
 });
 
+// get post for user
+router.get("/get-user-post", auth, async (req, res) => {
+    try {
+        let userID = req.user;
+
+        let userInfo = await User.findOne({ _id: userID });
+        let username = userInfo.username;
+
+        let postInfo = await Post.find({ username: username });
+
+        let result = [];
+        for (let i = 0; i < postInfo.length; i++) {
+            let imagepath = postInfo[i].imagePath;
+
+            let image = "";
+            if (fs.existsSync(imagepath)) {
+                image = convertImageBase64(imagepath, postInfo[i].extension);
+            }
+
+            result.push({
+                username: postInfo[i].username,
+                title: postInfo[i].title,
+                image: image
+            });
+
+            if (i === postInfo.length - 1) {
+                return res.json(result);
+            }
+        }
+
+        res.json("No images");
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+
 // add post
 router.post("/add-post", auth, async(req, res) => {
     try {
-
         let postTitle = req.body.title;
+        let extension = req.body.extension;
+        let imageUri = req.body.imageUri;
         let userID = req.user;
+        let description = req.body.description;
 
-        let postImagePath = "./storage/images/post_" + userID + "/";
-        // make user folder
-        fs.mkdir(userImagePath, (err) => {
+        
+        let userInfo = await User.findOne({ _id: userID });
+        
+        let userName = userInfo.username;
+        
+        let uri = convertToBase64(extension, imageUri);
+
+        let randName = generateRandomId();
+        
+        let userPath = userInfo.imagePath + randName + extension;
+        
+        // console.log("ext", extension);
+        // console.log(userPath);
+        // console.log(postTitle);
+
+        fs.stat(userPath, (err) => {
             if (err) {
-                    // check err
-                    console.log(err);
-            } else {
-                    // successful
-                    console.log("Post directory made!");
+                fs.writeFile(userPath, uri, 'base64', (err) => {
+                    if (err) {
+                        console.error(error);
+                    } else {
+                        console.log("Image successfully created!");
+                    }
+                });
             }
         });
-
-        const newPost = await new Post({ userId: userID, title: postTitle, imagePath: postImagePath, likes: 0 });
+        
+        const newPost = await new Post({ username: userName, title: postTitle, imagePath: userPath, name: randName, description: description, extension: extension, likes: 0 });
         await newPost.save();
         console.log(newPost);
 
-        // get post id
-        let postID = newPost._id;
-
-        // generate token on payload of post id
-        const token = jwtGenerator(postID);
-
         // res.json token
-        res.json({ token });
-
+        res.json("User image successfully posted");
     } catch (error) {
         console.log(error);
         res.status(500).json("server error");

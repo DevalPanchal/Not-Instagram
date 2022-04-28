@@ -23,7 +23,7 @@
         <div class="image-container">
             <div class="image-grid-container">
                 <div v-for="post in posts" :key="post" class="card">
-                    <img :src="`../assets/${post}`" @click="routeTo(`/post`)" />
+                    <img :src="post.image" @click="routeTo(`/post`)" />
                 </div>
             </div>
         </div>
@@ -43,13 +43,14 @@ export default {
             posts_amount: 0,
             friends: 0,
             description: "Default Description",
-            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png"],
+            posts: [],
             post_id: [],
             post_image_path: []
         }
     },
     mounted() {
         this.getUserInfo();
+        this.getUserPost();
     },
     methods: {
         routeTo(route) {
@@ -85,8 +86,26 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        async getUserPost() {
+            try {
+                const response = await fetch("http://localhost:5000/post/get-user-post", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const data = await response.json();
+                console.log(data);
+                if (data === "No images") {
+                    this.posts = [];
+                } else {
+                    this.posts = [...data];
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
-
     }
 }
 

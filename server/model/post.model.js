@@ -5,10 +5,12 @@ const Schema = mongoose.Schema;
 
 // create post schema
 const postSchema = new Schema({
-
-    userId: { type: ObjectId, required: true, unique: false },
+    username: { type: String, required: true, unique: false },
     title: { type: String, required: true, unique: false },
     imagePath: { type: String, required: true, unique: false },
+    extension: { type: String, required: true, unique: false },
+    name: { type: String, required: true, unique: true },
+    description: { type: String, required: true, unique: true },
     likes: { type: Number }
 
 }, {

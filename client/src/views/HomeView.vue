@@ -3,6 +3,13 @@
 		<Navbar />
 		<!-- <button @click="logout">logout [remove later]</button> -->
 		<AddComment />
+		<div class="posts">
+			<div class="post" v-for="post in posts" :key="post">
+				<h2>{{ post.title }}</h2>
+				<img :src="post.image" class="post-image" />
+				<p v-if="post.description"><strong>Description:</strong> {{ post.description }}</p>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -14,12 +21,14 @@ export default {
 	data() {
 		return {
 			authenticated : false,
-			requests: []
+			requests: [],
+			posts: []
 		}
 	},
 	mounted () {
 		this.isAuthorized();
 		this.getRequests();
+		this.getPosts();
 	},
 	methods: {
 		logout() {
@@ -60,11 +69,45 @@ export default {
 			} catch (error) {
 				console.error(error);
 			}
+		},
+		async getPosts() {
+			try {
+				const response = await fetch("http://localhost:5000/post/all-posts", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						token: localStorage.token
+					}
+				});
+				const data = await response.json();
+				console.log(data);
+				this.posts = [...data];
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	}
 }
 </script>
 
-<style>
-
+<style scoped lang="scss">
+.posts {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 15px;
+	margin: 10px;
+	
+}
+.post {
+	width: 50%;
+	background-color: #fff;
+	box-shadow: 1px 1px 2px #dbdbdb;
+}
+.post-image {
+	width: 350px;
+	height: 350px;
+	object-fit: cover;
+}
 </style>

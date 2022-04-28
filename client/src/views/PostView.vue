@@ -18,13 +18,16 @@
             <div class="previewBlock" @click="chooseFile" :style="{ 'background-image': `url(${filePreview})` }">
             </div>
             <div>
-                <label for= "title">Upload an image: </label><input class="form-control form-control-lg" ref="fileInput" type="file" id="formFileLg" @input="selectImgFile">
+                <label for= "title">Upload an image: </label>
+                <input class="form-control form-control-lg" ref="fileInput" type="file" id="formFileLg" @input="handleChange">
             </div>
             <div>
-                <label for= "title">Title: </label><input type="text" name="titleInput" id="title" placeholder="Write a title!"/>
+                <label for= "title">Title: </label>
+                <input v-model="title" type="text" name="titleInput" id="title" placeholder="Write a title!"/>
             </div> 
             <div >
-                <label for= "desc">Desc: </label> <input type="text" name="descInput" id="desc" placeholder="Write a description(optional)!"/>
+                <label for= "desc">Desc: </label> 
+                <input v-model="post_description" type="text" name="descInput" id="desc" placeholder="Write a description(optional)!"/>
             </div>    
     </div>
 
@@ -40,9 +43,11 @@ export default {
     data() {
         return {
             filePreview: null,
-            post_title: "",
+            title: "",
             post_description: "",
-            post_image: ""
+            post_image: "",
+            extension: "",
+            selectedFile: ""
         }
     },
     // mounted() {
@@ -77,6 +82,7 @@ export default {
             reader.onload = () => {
                 this.imageUri = reader.result;                
                 this.extension = filename.match(/\.[0-9a-z]+$/i);
+                console.log(this.extension);
             }
         },
         async onUpload() { // TODO: fix this
@@ -113,45 +119,9 @@ export default {
                 console.error(error);
             }
         },
-        async createPost() {
-            console.log("TESTING");
-            // TODO: testing fetch users
+        async createPost() {           
             try {
-                const res = await fetch("http://localhost:5000/user/all-users", {
-                    method: "GET",
-                    headers: {
-                        token: localStorage.token
-                    }
-                });
-                const parseRes = await res.json();
-                console.log(parseRes);
-                // this.friends = parseRes.friends.length;
-                // this.username = parseRes.username;
-            } catch (error) {
-                console.error(error);
-            }
-
-            // TODO: testing fetch post
-            try {
-                console.log("Testing fetch");
-                const res = await fetch("http://localhost:5000/post/all-posts", {
-                    method: "GET",
-                    headers: {
-                        token: localStorage.token
-                    }
-                });
-                const parseRes = await res.json();
-                console.log(parseRes);
-            } catch (error) {
-                console.error(error);
-            }
-
-            // TODO: testing add post
-            
-            try {
-                console.log("Testing add")
-                
-                const body = { title: "hellso" };
+                const body = { title: this.title, extension: this.extension[0], imageUri: this.imageUri, description: this.post_description };
                 const response = await fetch("http://localhost:5000/post/add-post", {
                     method: "POST",
                     headers: {
@@ -161,18 +131,13 @@ export default {
                     body: JSON.stringify(body)
                 });
                 const parseResponse = await response.json();
-                console.log("A")
+                // console.log("A")
                 console.log(parseResponse);
 
             } catch (error) {
                 console.error(error);
             }
-
-
         }
-
-
-
     }
 }
 </script>

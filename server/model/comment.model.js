@@ -5,9 +5,8 @@ const Schema = mongoose.Schema;
 
 // create comment schema
 const commentSchema = new Schema({
-
-    userId: { type: ObjectId, required: true, unique: false },
-    postId: { type: ObjectId, required: true, unique: false },
+    userId: { type: String, required: true, unique: false },
+    postId: { type: String, required: true, unique: false },
     text: { type: String, required: true, unique: false },
     likes: { type: Number }
 
