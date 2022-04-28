@@ -36,4 +36,4 @@ Slides: https://docs.google.com/presentation/d/1ES5ZXtfi_e5v1DEcb-tyO_oPXYZSgRCL
     - then in the pop-up modal click on `Connect your application`
     - then copy the uri and paste it in the `.env` file `MONGO_URI="your uri here"`
     - make necessary changes to the uri (i.e. username, password, db name)
-6. run with "npm run dev"
+6. run with `npm run dev`
