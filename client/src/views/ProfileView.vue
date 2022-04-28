@@ -3,6 +3,7 @@
         <Navbar />
         <div class="header-content">
             <h1>{{ username }}</h1>
+            <h4 @click="routeTo(`/new-post`)">New Post</h4>
             <h3 @click="routeTo(`/settings`)">Settings</h3>
             <i class="fa fa-cog" ></i>
         </div>
@@ -22,7 +23,7 @@
         <div class="image-container">
             <div class="image-grid-container">
                 <div v-for="post in posts" :key="post" class="card">
-                    <img :src="`../assets/${post}`" />
+                    <img :src="post.image" @click="routeTo(`/post`)" />
                 </div>
             </div>
         </div>
@@ -42,14 +43,14 @@ export default {
             posts_amount: 0,
             friends: 0,
             description: "Default Description",
-            posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png", "logo.png"]
+            posts: [],
+            post_id: [],
+            post_image_path: []
         }
     },
     mounted() {
         this.getUserInfo();
-        if (this.description === undefined) {
-            this.description = "Default Description"
-        }
+        this.getUserPost();
     },
     methods: {
         routeTo(route) {
@@ -70,6 +71,41 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        async getUserPosts(){
+            try {
+                console.log("Testing fetch");
+                const res = await fetch("http://localhost:5000/post/all-posts", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const parseRes = await res.json();
+                console.log(parseRes);
+                
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async getUserPost() {
+            try {
+                const response = await fetch("http://localhost:5000/post/get-user-post", {
+                    method: "GET",
+                    headers: {
+                        token: localStorage.token
+                    }
+                });
+                const data = await response.json();
+                console.log(data);
+                if (data === "No images") {
+                    this.posts = [];
+                } else {
+                    this.posts = [...data];
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 }
@@ -84,7 +120,22 @@ export default {
     gap: 10px;
     justify-content: center;
     align-items: center;
+    
     h3 {
+        font-size: 20px;
+        border-radius: 5px;
+        border: 1px solid #d1d1d1;
+        padding: 5px 2px;
+        margin: 0;
+        transition: 0.2s;
+        &:hover {
+            cursor: pointer;
+            background: #d1d1d1;
+            color: #fff;
+        }
+    }
+
+    h4 {
         font-size: 20px;
         border-radius: 5px;
         border: 1px solid #d1d1d1;

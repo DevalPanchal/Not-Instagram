@@ -29,12 +29,15 @@ const register = require("./routes/auth/user");
 const userRoute = require("./routes/user.info");
 const friendRoute = require("./routes/friend.info");
 const imageRoute = require("./routes/image.info");
-
+const postRoute = require("./routes/post.info");
+const commentRoute = require("./routes/comment.info");
 
 // app.use("/api/users", users);
 app.use("/auth/user", register);
 app.use("/user", userRoute);
 app.use("/friend", friendRoute);
 app.use("/image", imageRoute);
+app.use("/post", postRoute);
+app.use("/comment", commentRoute);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

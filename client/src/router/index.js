@@ -6,6 +6,8 @@ import ProfileView from '../views/ProfileView.vue';
 import FriendsView from '../views/FriendsView.vue';
 import SettingsView from '../views/SettingsView.vue';
 import UserProfile from '../views/UserProfile.vue';
+import PostView from "../views/PostView.vue";
+import CommentView from "../views/CommentView.vue"
 
 const routes = [
   	{
@@ -60,6 +62,18 @@ const routes = [
 		path: "/user-profile",
 		name: "UserProfile",
 		component: UserProfile,
+		path: "/new-post",
+		name: "Post",
+		component: PostView,
+		props: true,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/post",
+		name: "Comment",
+		component: CommentView,
 		props: true,
 		meta: {
 			requiresAuth: true
