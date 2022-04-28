@@ -37,10 +37,9 @@
 
 <script>
 import Navbar from '../components/Navbar.vue';
-import AddComment from "../components/AddComment.vue";
 export default {
     name: "Comment",
-    components: { Navbar, AddComment },
+    components: { Navbar, },
     data() {
         return {
             post_title: "",
