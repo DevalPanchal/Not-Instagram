@@ -2,12 +2,14 @@
     <div class="profileHeader">
         <Navbar />
         <div class="header-content">
+            <!-- Header contains username, links to posting and settings -->
             <h1>{{ username }}</h1>
             <h4 @click="routeTo(`/new-post`)">New Post</h4>
             <h3 @click="routeTo(`/settings`)">Settings</h3>
             <i class="fa fa-cog" ></i>
         </div>
         <table>
+            <!-- Table to hold friends and posts counts -->
             <tr>
                 <td>{{ posts.length }} posts</td>
                 <td class="friends" @click="routeTo(`/friends`)">{{ friends }} friends</td>
@@ -20,6 +22,7 @@
 
         <h2>POSTS</h2>
 
+        <!-- User's Posts -->
         <div class="image-container">
             <div class="image-grid-container">
                 <div v-for="post in posts" :key="post" class="card">
@@ -42,7 +45,7 @@ export default {
             username: "",
             posts_amount: 0,
             friends: 0,
-            description: "Default Description",
+            description: " ",
             posts: [],
             post_id: [],
             post_image_path: []
@@ -58,12 +61,15 @@ export default {
         },
         async getUserInfo(){
             try {
+                // Fetch user information from the server
                 const res = await fetch("http://localhost:5000/user/get-user", {
                     method: "GET",
                     headers: {
                         token: localStorage.token
                     }
                 });
+
+                // apply data 
                 const parseRes = await res.json();
                 this.friends = parseRes.friends.length;
                 this.username = parseRes.username;
@@ -74,7 +80,6 @@ export default {
         },
         async getUserPosts(){
             try {
-                console.log("Testing fetch");
                 const res = await fetch("http://localhost:5000/post/all-posts", {
                     method: "GET",
                     headers: {
