@@ -102,17 +102,7 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        },
-        deleteComment() {
-            // TODO: delete comment (can only delete your own)
-        },
-        likePost() {
-            // TODO: like the post
-        },
-        likeComment() {
-            // TODO: like a comment
         }
-
     }
 }
 </script>
