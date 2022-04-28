@@ -228,8 +228,22 @@ router.get("/user/info/:username", auth, async(req, res) => {
 
         // get user info
         let userInfo = await User.findOne({ username: username });
+        let userPath = userInfo.imagePath + "profile.jpg";
+        let image = "";
+        if (fs.existsSync(userPath)) {
+            let extension = userPath.match(/\.[0-9a-z]+$/i);
+            image = convertImageBase64(userPath, extension[0]);
+        }
+
+        let result = {
+            id: userInfo._id,
+            username: userInfo.username,
+            friends: userInfo.friends,
+            image: image
+        }
+
         
-        res.json(userInfo);
+        res.json(result);
     } catch (error) {
         console.error(error);
     }

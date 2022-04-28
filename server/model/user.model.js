@@ -9,7 +9,8 @@ const userSchema = new Schema({
      friends: [String],
      requests: [String],
      requestSent: [String],
-     imagePath: { type: String }
+     imagePath: { type: String },
+     description: {type: String, required: false}
 }, {
      timestamps: true
 });

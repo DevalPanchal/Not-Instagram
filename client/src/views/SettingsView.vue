@@ -14,12 +14,11 @@
                 </div>
                 <div class="description-box">
                     <label>Description</label>
-                    <textarea cols="45" rows="5" maxlength="255" id="textarea" @keyup="countChars"></textarea>
+                    <textarea class="description"  maxlength="255" id="textarea" @keyup="countChars"></textarea>
 
                     <div class="char-count">
                         <span id="chars">{{charCount}} / 255</span>
                     </div>
-
                 </div>
             </section>
 
@@ -29,6 +28,8 @@
                 </div>
 
                 <button class="delete-btn" @click="deleteAccount">Delete account</button>
+
+                <button @click="uploadDesc">upload description</button>
             </section>
         </div>
     </div>
@@ -46,6 +47,7 @@ export default {
             imageUri: "",
             extension: "",
             charCount: 0,
+            description: "",
             fileError: "file-size-error"
         }
     },
@@ -107,8 +109,29 @@ export default {
                 console.error(error);
             }
         },
+        async uploadDesc(){
+            console.log(this.description);
+            try {
+                const response = await fetch(`http://localhost:5000/user/post-desc`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    },
+                    body: JSON.stringify({description: this.description})
+                });
+                const parseRes = await response.json();
+                if (parseRes) {
+                    console.log(parseRes);
+                    this.$router.go();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
         countChars(){
             this.charCount = document.getElementById("textarea").value.length;
+            this.description = document.getElementById("textarea").value;
         }
     }
 }
@@ -150,11 +173,17 @@ export default {
             margin-right: 5%;
         }
         .description-box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             margin: 10px;
+            label {
+                font-weight: bold;
+            }
             textarea {
-                height: 6rem;
-                width: 25rem;
-                margin-left: 2.3rem;
+                height: 30%;
+                width: 50%;
                 border-radius: 5px;
             }
             // label {
