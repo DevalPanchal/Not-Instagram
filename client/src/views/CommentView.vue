@@ -6,8 +6,6 @@
                 {{ post_title }}
                 {{ post_description }}
                 {{ post_image }}
-                <h2>PLACEHOLDER IMAGE:</h2>
-                <img src = "..\..\..\server\storage\images\user_Amogus\profile.png">
             </div>
             <div class = "column" id = "right">
                 <h3>COMMENTS</h3>
