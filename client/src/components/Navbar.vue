@@ -49,7 +49,7 @@
 
                     <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
                     <i class="fa-solid fa-paper-plane"></i>
-                    
+                    <i class = "fa-solid fa-plus" @click="routeTo(`/new-post`)"></i>
                     
                     <div class="dropdown">
                         <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

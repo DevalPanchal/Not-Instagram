@@ -2,7 +2,6 @@
 	<div class="home">
 		<Navbar />
 		<!-- <button @click="logout">logout [remove later]</button> -->
-		<AddComment />
 		<div class="posts">
 			<div class="post" v-for="post in posts" :key="post">
 				<h2>{{ post.title }}</h2>
@@ -15,9 +14,8 @@
 
 <script>
 import Navbar from '../components/Navbar.vue';
-import AddComment from '../components/AddComment.vue';
 export default {
-	components: { Navbar, AddComment },
+	components: { Navbar },
 	data() {
 		return {
 			authenticated : false,
