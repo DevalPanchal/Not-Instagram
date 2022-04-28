@@ -10,7 +10,7 @@
         <table>
             <tr>
                 <td>{{ posts.length }} posts</td>
-                <td class="friends">{{ friends.length }} friends</td>
+                <td class="friends" @click="routeTo(`/friends`)">{{ friends.length }} friends</td>
             </tr>
         </table>
 
@@ -51,6 +51,11 @@ export default {
         this.friends = [...data.friends];
         this.profileImage = data.image
         console.log(data);
+    },
+    methods: {
+        // routeTo(route) {
+        //     this.$
+        // }
     }
 }
 </script>
@@ -144,13 +149,13 @@ h2:after {
     height: 20rem;
 }
 
-.friends {
-    transition: 0.2s;
-    &:hover {
-        cursor: pointer;
-        color: #d1d1d1;
-    }
-}
+// .friends {
+//     transition: 0.2s;
+//     &:hover {
+//         cursor: pointer;
+//         color: #d1d1d1;
+//     }
+// }
 
 .image-container {
     display: flex;

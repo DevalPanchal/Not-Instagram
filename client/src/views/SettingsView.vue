@@ -14,12 +14,11 @@
                 </div>
                 <div class="description-box">
                     <label>Description</label>
-                    <textarea cols="45" rows="5" maxlength="255" id="textarea" @keyup="countChars"></textarea>
+                    <textarea class="description"  maxlength="255" id="textarea" @keyup="countChars"></textarea>
 
                     <div class="char-count">
                         <span id="chars">{{charCount}} / 255</span>
                     </div>
-
                 </div>
             </section>
 
@@ -150,11 +149,17 @@ export default {
             margin-right: 5%;
         }
         .description-box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             margin: 10px;
+            label {
+                font-weight: bold;
+            }
             textarea {
-                height: 6rem;
-                width: 25rem;
-                margin-left: 2.3rem;
+                height: 30%;
+                width: 50%;
                 border-radius: 5px;
             }
             // label {
