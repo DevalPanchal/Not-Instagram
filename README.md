@@ -10,6 +10,20 @@
 # Project Overview
 The project that was decided to be developed was an instagram clone dubbed "Not-Instagram", which covers the basic functionalities of the actual instagram app.
 
+# Software/Tools used:
+MongoDB, Vue, JSON Web Tokens, Vue-Toast-Notification, and Bootstrap
+
+# Independant Study, JSON WebTokens:
+Slides: https://docs.google.com/presentation/d/1ES5ZXtfi_e5v1DEcb-tyO_oPXYZSgRCLVn3dOxMJpgk/edit?usp=sharing
+
+# Main functionalities include:
+- Dedicated user accounts with a username + password
+- Functioning account login + registration
+- User posts made up of an image, caption, and comments
+- Friend system that allows you to request friendship from other users, as well as view your current list of friends
+- Upload-based profile picture customization
+- Filter-based user searching, that allows for friend requests and searched user profile viewing
+
 # How to run
 1. Navigate to the server directory
 2. run `npm install`
@@ -22,8 +36,4 @@ The project that was decided to be developed was an instagram clone dubbed "Not-
     - then in the pop-up modal click on `Connect your application`
     - then copy the uri and paste it in the `.env` file `MONGO_URI="your uri here"`
     - make necessary changes to the uri (i.e. username, password, db name)
-6. run the server with `npm run server`
-7. navigate to the client directory
-8. run `npm install`
-9. npm the client with `npm run serve` on a different terminal
-10. navigate to localhost:8080 on your browser
+6. run with `npm run dev`
