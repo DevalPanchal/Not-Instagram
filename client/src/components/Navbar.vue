@@ -103,6 +103,7 @@ export default {
         logout() {
             localStorage.removeItem("token");
             localStorage.removeItem("username");
+            localStorage.removeItem("userProf");
             this.$router.push("/login");
         },
         stopDropDown(e) {
