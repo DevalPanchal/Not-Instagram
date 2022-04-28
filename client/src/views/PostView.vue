@@ -1,7 +1,7 @@
 <template>
+    <Navbar />
     <div class="post">
         
-        <Navbar />
         
         <!-- <section class="left-panel">
         </section>
@@ -14,24 +14,24 @@
             </div>
             <button @click="onUpload" id="postButton" class="post-btn">Create Post</button>
         </section> -->
-        <div class="container">
+        <div class="post-container">
             <div class="previewBlock" @click="chooseFile" :style="{ 'background-image': `url(${filePreview})` }">
             </div>
-            <div>
+            <div class="section">
                 <label for= "title">Upload an image: </label>
                 <input class="form-control form-control-lg" ref="fileInput" type="file" id="formFileLg" @input="handleChange">
             </div>
-            <div>
+            <div class="section">
                 <label for= "title">Title: </label>
-                <input v-model="title" type="text" name="titleInput" id="title" placeholder="Write a title!"/>
+                <input v-model="title" type="text" name="titleInput" id="title" class="title" placeholder="Write a title!"/>
             </div> 
-            <div >
+            <div class="section">
                 <label for= "desc">Desc: </label> 
-                <input v-model="post_description" type="text" name="descInput" id="desc" placeholder="Write a description(optional)!"/>
+                <input v-model="post_description" type="text" name="descInput" class="description" id="desc" placeholder="Write a description(optional)!"/>
             </div>    
-    </div>
-
-        <button @click="createPost" id="postButton" class="post-btn">Create Post</button>
+            <button @click="createPost" id="postButton" class="post-btn">Create Post</button>
+        </div>
+    
     </div>
 </template>
 
@@ -79,8 +79,9 @@ export default {
             let filename = this.selectedFile.name;
             let reader = new FileReader();
             reader.readAsDataURL(this.selectedFile);
-            reader.onload = () => {
-                this.imageUri = reader.result;                
+            reader.onload = (e) => {
+                this.imageUri = reader.result;   
+                this.filePreview = e.target.result
                 this.extension = filename.match(/\.[0-9a-z]+$/i);
                 console.log(this.extension);
             }
@@ -133,6 +134,11 @@ export default {
                 const parseResponse = await response.json();
                 // console.log("A")
                 console.log(parseResponse);
+                this.title = "";
+                this.extension = "";
+                this.imageUri = "";
+                this.filePreview = "";
+                this.description = "";
 
             } catch (error) {
                 console.error(error);
@@ -153,25 +159,51 @@ export default {
 #he{
     display: inline-block;
 }
-.container {
-        max-width: 600px;
-    }
-    .previewBlock {
-        display: block;
-        cursor: pointer;
-        width: 300px;
-        height: 280px;        
-        margin: 0 auto 20px;
-        background-position: center center;
-        background-size: cover;
-    }
+.post {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 70%;
+}
+.post-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.title {
+    margin: 5px;
+    height: 30px;
+    width: 100%;
+}
+.description {
+    width: 100%;
+    height: 30px;
+}
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.previewBlock {
+    display: block;
+    cursor: pointer;
+    width: 300px;
+    height: 280px;        
+    margin: 0 auto 20px;
+    background-position: center center;
+    background-size: cover;
+}
 #imageSelect{
     width: 300px;
     height: 50px;
 }
-#postButton{
+.post-btn {
+    margin: 10px;
     width: 100px;
-    height: 60px;
+    height: 42px;
     background-color:  #2c3e50;
     color: white;
     padding: 0px;

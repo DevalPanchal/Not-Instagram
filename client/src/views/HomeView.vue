@@ -91,6 +91,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.home {
+	background-color: #fafafa;
+	padding-bottom: 50px;
+}
 .posts {
 	display: flex;
 	justify-content: center;
