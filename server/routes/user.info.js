@@ -78,13 +78,16 @@ router.post("/post-desc", auth, async (req, res)=>{
         let userID = req.user;
 
         // get user info
-        let userInfo = await User.findOne({_id: userID});
+        let userInfo = await User.findOne({ _id: userID });
 
         // get req.body params
         const description = req.body.description;
 
         // update user
-        await User.updateOne({_id: userID, description: description});
+        await User.updateOne(
+            { _id: userID },
+            { description: description }
+        );
 
         res.json(description);
    } catch (error) {

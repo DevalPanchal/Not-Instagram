@@ -55,7 +55,7 @@
                         <button class="btn btn-secondary user dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <p>{{ this.currentUser }}</p> 
                             <!-- <i class="fas fa-user"></i> -->
-                            <img v-if="profileImage" :src="profileImage" class="profile-img" alt="profile" />
+                            <img v-if="profileImage.length>0" :src="profileImage" class="profile-img" alt="profile" />
                             <img v-else :src="`../assets/logo.png`" class="profile-img" alt="profile" />
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

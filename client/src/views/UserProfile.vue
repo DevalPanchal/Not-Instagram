@@ -14,9 +14,9 @@
             </tr>
         </table>
 
-        <!-- <p id="description">
+        <p id="description">
             {{ description }}
-        </p> -->
+        </p>
 
         <h2>POSTS</h2>
 
@@ -41,6 +41,7 @@ export default {
             username: "",
             friends: [],
             profileImage: "",
+            description: "",
             posts: ["logo.png", "logo.png", "logo.png", "logo.png", "logo.png"]
         }
     },
@@ -49,7 +50,8 @@ export default {
 
         this.username = data.username;
         this.friends = [...data.friends];
-        this.profileImage = data.image
+        this.profileImage = data.image;
+        this.description = data.description;
         console.log(data);
     },
     methods: {

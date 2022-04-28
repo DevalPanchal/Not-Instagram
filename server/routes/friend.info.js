@@ -235,14 +235,16 @@ router.get("/user/info/:username", auth, async(req, res) => {
             image = convertImageBase64(userPath, extension[0]);
         }
 
+        console.log(userInfo);
+
         let result = {
             id: userInfo._id,
             username: userInfo.username,
             friends: userInfo.friends,
+            description: userInfo.description,
             image: image
         }
 
-        
         res.json(result);
     } catch (error) {
         console.error(error);

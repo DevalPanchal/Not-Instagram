@@ -21,7 +21,8 @@ export default {
     data() {
         return {
             friends: [],
-            usersName: ""
+            usersName: "",
+            description: ""
         }
     },
     mounted() {

@@ -47,6 +47,9 @@ export default {
     },
     mounted() {
         this.getUserInfo();
+        if (this.description === undefined) {
+            this.description = "Default Description"
+        }
     },
     methods: {
         routeTo(route) {
@@ -63,6 +66,7 @@ export default {
                 const parseRes = await res.json();
                 this.friends = parseRes.friends.length;
                 this.username = parseRes.username;
+                this.description = parseRes.description;
             } catch (error) {
                 console.error(error);
             }
