@@ -110,7 +110,7 @@ export default {
             }
         },
         async uploadDesc(){
-            console.log(this.description);
+            
             try {
                 const response = await fetch(`http://localhost:5000/user/post-desc`, {
                     method: "POST",

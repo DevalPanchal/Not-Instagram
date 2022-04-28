@@ -65,7 +65,28 @@ export default {
                     this.password = "";
                 }
             }
-        }
+            this.uploadDesc();
+        },
+        async uploadDesc(){
+            
+            try {
+                const response = await fetch(`http://localhost:5000/user/post-desc`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    },
+                    body: JSON.stringify({description: " "})
+                });
+                const parseRes = await response.json();
+                if (parseRes) {
+                    console.log(parseRes);
+                    this.$router.go();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
     },
     mounted() {
         if (localStorage.token) {
