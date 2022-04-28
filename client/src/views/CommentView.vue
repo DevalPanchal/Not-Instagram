@@ -46,7 +46,18 @@ export default {
             post_title: "",
             post_description: "",
             post_image: "",
-            comments: []
+            comments: [{ id: "0",
+                    userId: "0",
+                    postId: "0",
+                    text: "0",
+                    likes: 0
+                },
+                { id: "1",
+                    userId: "1",
+                    postId: "0",
+                    text: "123",
+                    likes: 69
+                }]
             
         }
     },
@@ -79,8 +90,21 @@ export default {
         loadPost() {
             // TODO: load the post (and its comments)
         },
-        addComment() {
-            // TODO: add a comment to the post
+        async loadComment() {
+            try {
+                const response = await fetch(`http://localhost:5000/comment/all-comments`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    }
+                });
+                const data = await response.json();
+                this.comments = data;
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
         },
         deleteComment() {
             // TODO: delete comment (can only delete your own)
