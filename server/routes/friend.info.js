@@ -198,7 +198,7 @@ router.get("/get/friend", auth, async(req, res) => {
                 friendDesc.push(friendInfo.description);
             } else {
                 // console.log("empty");
-                friendDesc[i].push(" ");
+                // friendDesc[i].push(" ");
             }
 
             let userPath = friendInfo.imagePath + "profile.jpg";
