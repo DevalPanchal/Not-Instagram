@@ -35,8 +35,8 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" @click="stopDropDown">
                             <p class="requests">Friends</p>
-                            <li class="list-item" v-for="user in users" :key="user">
-                                <a v-if="this.friends.includes(user)" class="dropdown-item">{{ user }}</a>
+                            <li class="list-item" v-for="friend in friends" :key="friend">
+                                <a  class="dropdown-item">{{ friend }}</a>
                             </li>
                             <hr />
                             <p class="requests">Requests</p>
@@ -48,7 +48,6 @@
                     </div>
 
                     <i class="fa-solid fa-house" @click="routeTo(`/`)" ></i>
-                    <i class="fa-solid fa-paper-plane"></i>
                     <i class = "fa-solid fa-plus" @click="routeTo(`/new-post`)"></i>
                     
                     <div class="dropdown">
@@ -140,6 +139,7 @@ export default {
                 const parseRes = await response.json();
                 console.log("friend request successfully sent");
                 console.log(parseRes);
+                this.$router.go();
             } catch (error) {
                 console.error(error);
             }
@@ -177,7 +177,9 @@ export default {
                 if (typeof parseRes === "string") {
                     this.$toast.warning(parseRes, { duration: 1000, position: "top-left" });
                 }
-
+                setTimeout(() => {
+                    this.$router.go();
+                }, 2000);
             } catch (error) {
                 console.error(error);
             }

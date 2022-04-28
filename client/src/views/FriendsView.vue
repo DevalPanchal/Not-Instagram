@@ -56,7 +56,12 @@ export default {
                     }
                 });
                 const data = await response.json();
-                this.friends = [...data];
+                console.log(data);
+                if (data === "No images") {
+                    this.friends = [];
+                } else {
+                    this.friends = [...data];
+                }
             } catch (error) {
                 console.error(error);
             }

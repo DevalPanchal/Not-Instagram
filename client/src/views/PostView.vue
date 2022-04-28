@@ -75,15 +75,26 @@ export default {
         },
         handleChange(e) {
             const selectedFile = e.target.files[0];
+            if (selectedFile[0] !== ".jpg" || selectedFile[0] !== ".png") {
+                this.$toast.warning("Wrong image type, only jpg and png are allowed", { duration: 3000, position: "top-left" });
+                setTimeout(() => {
+                    this.$router.go();
+                }, 1000);
+            }
+            console.log(e.target.files);
             this.selectedFile = selectedFile;
             let filename = this.selectedFile.name;
             let reader = new FileReader();
             reader.readAsDataURL(this.selectedFile);
-            reader.onload = (e) => {
-                this.imageUri = reader.result;   
-                this.filePreview = e.target.result
-                this.extension = filename.match(/\.[0-9a-z]+$/i);
-                console.log(this.extension);
+            if (this.selectedFile.size < 65000) {
+                reader.onload = (e) => {
+                    this.imageUri = reader.result;   
+                    this.filePreview = e.target.result
+                    this.extension = filename.match(/\.[0-9a-z]+$/i);
+                    console.log(this.extension);
+                }
+            } else {
+                this.$toast.warning("Image size is too large", { duration: 3000, position: "top-left" });
             }
         },
         async onUpload() { // TODO: fix this
