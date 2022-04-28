@@ -29,6 +29,8 @@
                 </div>
 
                 <button class="delete-btn" @click="deleteAccount">Delete account</button>
+
+                <button @click="uploadDesc">upload description</button>
             </section>
         </div>
     </div>
@@ -46,6 +48,7 @@ export default {
             imageUri: "",
             extension: "",
             charCount: 0,
+            description: "",
             fileError: "file-size-error"
         }
     },
@@ -107,8 +110,29 @@ export default {
                 console.error(error);
             }
         },
+        async uploadDesc(){
+            console.log(this.description);
+            try {
+                const response = await fetch(`http://localhost:5000/user/post-desc`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: localStorage.token
+                    },
+                    body: JSON.stringify({description: this.description})
+                });
+                const parseRes = await response.json();
+                if (parseRes) {
+                    console.log(parseRes);
+                    this.$router.go();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
         countChars(){
             this.charCount = document.getElementById("textarea").value.length;
+            this.description = document.getElementById("textarea").value;
         }
     }
 }
