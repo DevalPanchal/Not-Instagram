@@ -19,9 +19,9 @@ router.get("/all-comments", auth, async(req, res) => {
         console.log(allPosts);
 
         // get all comments
-        let comments = allComments.map((item) => item.text);
+        // let comments = allComments.map((item) => item.text);
 
-        res.json(comments);
+        res.json(allComments);
     } catch (error) {
         console.error(error);
         res.status(500).json("server error");

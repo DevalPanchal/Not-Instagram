@@ -14,11 +14,11 @@ router.get("/all-posts", auth, async(req, res) => {
         let allPosts = await Post.find();
         // console.log(allPosts);
         // get all posts
-        let posts = allPosts.map(
-            (item) => item._id
-        );
+        // let posts = allPosts.map(
+        //     (item) => item._id
+        // );
 
-        res.json(posts);
+        res.json(allPosts);
     } catch (error) {
         console.error(error);
         res.status(500).json("server error");
